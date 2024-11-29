@@ -132,8 +132,6 @@ Zertifizierungen spielen eine wichtige Rolle im Bereich der Cybersicherheit. Sie
 
 Weitere Informationen zu relevanten Zertifizierungen sowie eine überblicksartige Roadmap sind online verfügbar. Ein besonders hilfreicher Überblick ist unter [diesem Link](https://pauljerimy.com/security-certification-roadmap/) zu finden, welcher einen umfassenden Einblick in den Zertifizierungsweg im Bereich der IT-Sicherheit gibt.
 
-![image](https://www.stationx.net/wp-content/uploads/2023/09/image-6.jpeg)
-
 Das Wissen um diese Zertifikate hilft nicht nur beim persönlichen Kompetenzaufbau, sondern auch bei der Orientierung in einer sich ständig verändernden Berufslandschaft.
 
 
