@@ -135,15 +135,27 @@ Im Wesentlichen werden öffentlich zugängliche Daten gesammelt und in verwertba
 
 ### Von Daten zu Wissen
 
-OSINT sammelt Datenpunkte, verknüpft sie und schafft daraus verwertbare Erkenntnisse ("actionable knowledge"). Ein gutes Beispiel sind Verknüpfungen von Freundschaften – das sind oft nicht gewollte, aber öffentlich zugängliche Informationen. Wenn wir genug Datenpunkte sammeln, können wir mit hoher Wahrscheinlichkeit auf die sozialen Beziehungen, den Lebensstil und die Interessen einer Person schließen.
+Die Transformation von Daten zu Wissen erfolgt über verschiedene, klar definierte Stufen, wie auch das dargestellte Schaubild illustriert. Zunächst betrachten wir den Begriff der **Daten** – es handelt sich hierbei um rohe, unverarbeitete Fakten, die in ihrer isolierten Form keinen inhärenten Zusammenhang oder Bedeutung aufweisen. Im Kontext der OSINT-Recherche (Open Source Intelligence) sammeln wir genau solche Datenpunkte, seien es Namen, E-Mail-Adressen oder Fotografien. Diese Daten existieren zunächst unverbunden und bieten somit keinen unmittelbar verwertbaren Mehrwert.
 
-Ein umfassendes Wissen über eine Person oder ein Ziel kann dann genutzt werden, um Entscheidungen zu beeinflussen, wie etwa die Planung einer Marketingstrategie, die Strafverfolgung oder sogar die Vorbereitung eines gezielten Angriffs.
+Der nächste Schritt besteht in der Generierung von **Information**. Informationen entstehen, wenn Daten in einen kohärenten Zusammenhang gebracht werden, sodass sie in einer bestimmten Konstellation für uns Sinn ergeben. Ein typisches Beispiel wäre die Assoziation eines Namens mit einer spezifischen E-Mail-Adresse oder die Verknüpfung einer Fotografie mit einer Standortinformation. Durch die systematische Anwendung von OSINT-Techniken lassen sich solche Verbindungen herstellen, sodass aus einer anfänglichen Datenansammlung ein Netzwerk entsteht, das eine verwertbare Informationsbasis bietet.
+
+**Wissen** entsteht, wenn diese Informationsstränge strukturiert und in Beziehung zueinander gesetzt werden, um ein tieferes Verständnis zu ermöglichen. Dieses Stadium erlaubt es uns, Muster zu identifizieren, etwa soziale Beziehungen oder Netzwerkstrukturen. Es wird erkennbar, dass bestimmte Individuen über verschiedene Plattformen hinweg miteinander interagieren oder dass sich bestimmte Personen regelmäßig an spezifischen Orten aufhalten. Die methodische Verknüpfung dieser Informationen ermöglicht die Schaffung eines detaillierten Profils einer Zielperson oder eines Zielobjekts.
+
+Der darauffolgende Schritt betrifft die **Einsicht**. Einsicht ist das Resultat der systematischen Anwendung von Wissen, mit dem Ziel, tiefere Zusammenhänge zu erschließen oder Prognosen abzuleiten. Ein Beispiel hierfür wäre die Erkennung von Trends oder das Identifizieren spezifischer Verhaltensmuster. Die analytische Durchdringung der gesammelten Informationen kann uns ermöglichen, Schlüsselfiguren innerhalb sozialer Netzwerke zu erkennen oder die Art und Weise zu verstehen, wie bestimmte Interessengebiete miteinander korrelieren. Einsicht versetzt uns in die Lage, strategische Entscheidungen zu fundieren und zielgerichtet zu agieren.
+
+Die letzte Stufe in diesem Prozess ist die Ebene der **Weisheit**. Weisheit zeichnet sich dadurch aus, dass die gewonnenen Einsichten so genutzt werden, dass konkrete, zielgerichtete Entscheidungen getroffen und Maßnahmen abgeleitet werden können. Im Kontext von OSINT bedeutet dies, dass basierend auf den generierten Erkenntnissen gezielte Aktionen, wie etwa präzise Marketingstrategien, die Planung polizeilicher Maßnahmen oder gar die Vorbereitung eines gezielten Angriffs, erfolgen können. Weisheit umfasst also die Fähigkeit, abstrahierte Informationen so zu operationalisieren, dass sie einen spezifischen Zweck erfüllen und in einer realen Umgebung umgesetzt werden.
+
+Das dargestellte Schaubild veranschaulicht diesen gesamten Prozess: Es zeigt, wie sich lose, unverknüpfte Daten durch sukzessive Analyse und Integration in kohärente Informationen verwandeln, die letztlich in Einsicht und weise Entscheidungen münden.
+
+![image](https://mltfwbciccuo.i.optimole.com/cb:n4OZ.4d52/w:auto/h:auto/q:mauto/f:best/https://www.evalueserve.com/wp-content/uploads/2021/08/Insights-to-wisdom-infographic.png)
 
 ### Grundlagen von Datenpunkten
 
-Ein **Datenpunkt** ist eine einzelne Information, die für sich steht, beispielsweise ein Name, eine E-Mail-Adresse oder ein Standort. Diese Datenpunkte können über verschiedene Quellen abgeglichen werden, um mehr über eine Person zu erfahren. Einzelne Datenpunkte können wie Puzzleteile wirken, die kombiniert ein klares Bild ergeben.
+Ein **Datenpunkt** ist eine elementare Informationseinheit, die isoliert betrachtet noch keinen weiteren Kontext vermittelt, etwa ein Name, eine E-Mail-Adresse oder ein geografischer Standort. Datenpunkte sind die Grundlage, auf der jede OSINT-Recherche basiert. Sie sind vergleichbar mit Puzzleteilen, die erst durch ihre Verknüpfung ein kohärentes Gesamtbild ergeben können. Einzelne Datenpunkte mögen zunächst trivial erscheinen, doch in ihrer methodischen Verbindung entsteht ein wertvolles Informationsnetzwerk.
 
-Datenpunkte können sichtbar sein (wie ein Profilbild) oder versteckt (wie Metadaten in Bildern). Versteckte Datenpunkte wie Metadaten sind oft unbewusst veröffentlicht und können wertvolle Hinweise liefern. Es ist wichtig, Datenpunkte nicht isoliert zu betrachten, sondern sie zu verknüpfen, um neue Erkenntnisse zu gewinnen.
+Ein herausragendes Beispiel hierfür sind **versteckte Datenpunkte**, wie etwa die **Metadaten** in Bildern. Solche Informationen werden häufig unbewusst veröffentlicht, zum Beispiel als Standortdaten in einer Fotografie, die in sozialen Medien geteilt wird. Wenn eine ausreichende Menge dieser Datenpunkte gesammelt wird, kann daraus ein wertvolles, verwertbares Wissen resultieren. Es ist daher von essenzieller Bedeutung, dass Datenpunkte niemals isoliert, sondern stets in Bezug zu anderen Informationen betrachtet werden, um daraus **actionable knowledge** – also unmittelbar umsetzbare Erkenntnisse – zu generieren.
+
+Der Mehrwert von OSINT liegt in der Fähigkeit, verstreute Datenpunkte effizient zu sammeln und in einen sinnvollen Kontext zu setzen, sodass aus einer anfänglich amorphen Ansammlung von Fakten ein kohärentes, operatives Wissen wird. Genau diesen Prozess illustriert das Schaubild: Daten werden akquiriert, systematisch organisiert, in Wissen transformiert und schließlich angewandt, um fundierte strategische Entscheidungen zu treffen.
 
 ### Wer nutzt OSINT?
 
@@ -259,6 +271,8 @@ Für die Authentifizierung innerhalb von Active Directory werden zwei Protokolle
 
 Das Kerberos-Protokoll ist ein zentraler Bestandteil der Authentifizierung in vielen Netzwerken, insbesondere in Active Directory-Umgebungen. Es basiert auf einem Ticket-basierten System und verwendet kryptografische Schlüssel, um eine sichere Authentifizierung zwischen Clients und Diensten zu gewährleisten. Das Protokoll besteht aus drei Hauptentitäten: dem Client, dem Key Distribution Center (KDC), und den Diensten, auf die der Benutzer zugreifen möchte. Der KDC selbst ist weiter in zwei Teile untergliedert: den **Authentication Service (AS)** und den **Ticket Granting Service (TGS)**.
 
+![image](https://upload.wikimedia.org/wikipedia/commons/thumb/6/68/Kerberos_protocol.svg/645px-Kerberos_protocol.svg.png)
+
 Im Folgenden wird der detaillierte Ablauf beschrieben:
 
 1. **AS-REQ (Authentication Service Request)**: Der Benutzer, der sich am Netzwerk anmelden möchte, sendet eine Anfrage an den KDC. Diese Anfrage enthält den Benutzernamen und einen Authenticator, der mit dem Geheimschlüssel des Benutzers verschlüsselt ist. Dieser Authenticator besteht aus einem Zeitstempel und wird genutzt, um Replay-Angriffe zu verhindern.
@@ -272,6 +286,8 @@ Im Folgenden wird der detaillierte Ablauf beschrieben:
 5. **AP-REQ (Application Request)**: Der Benutzer sendet das erhaltene Service Ticket an den gewünschten Dienst. Dieser Schritt wird als **Application Request** bezeichnet und enthält das Service Ticket sowie einen weiteren Authenticator, der mit dem Session Key verschlüsselt ist. Das Service Ticket dient als Nachweis dafür, dass der Benutzer berechtigt ist, auf den Dienst zuzugreifen.
 
 6. **AP-REP (Application Response)**: Der angefragte Dienst prüft das Service Ticket und den Authenticator. Wenn beide erfolgreich verifiziert werden, wird der Zugriff gewährt. Optional kann der Dienst eine Antwort an den Benutzer zurücksenden, um die erfolgreiche Authentifizierung zu bestätigen.
+
+
 
 ### Schlüssel und Tickets im Kerberos-Protokoll
 
