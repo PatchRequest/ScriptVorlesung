@@ -539,33 +539,90 @@ wmiexec.py -k -no-pass north.sevenkingdoms.local/catelyn.stark@winterfell
 
 # Web Pentesting
 
-In diesem Kapitel werden wir uns mit Web Pentesting beschäftigen. Zuerst befassen wir uns mit den Grundlagen der Funktionsweise des modernen Webs.
+In diesem Kapitel widmen wir uns der Methodik des Web Pentestings. Zunächst werden die grundlegenden Funktionsprinzipien des modernen Webs erörtert, um ein tiefes Verständnis der Kommunikationsarchitektur zu gewährleisten.
 
 ## Grundlagen des Webs
-Das Web besteht in einem vereinfachten Modell aus zwei Hauptkomponenten: dem **Client** und dem **Server**.
+Das Web lässt sich in einem abstrahierten Modell auf zwei zentrale Komponenten reduzieren: den **Client** und den **Server**.
 
-- Der **Client** (z.B. unser PC) wird vom Benutzer gesteuert. Er sendet Anfragen an eine bestimmte Adresse, die der Browser in ein HTTP-konformes Format konvertiert und an den Server sendet.
-- Der **Server** verarbeitet die Anfrage, führt programmierte Aktionen aus, verändert oder sucht Daten und sendet eine HTTP-Antwort zurück an den Client. Der Browser des Clients rendert diese Antwort dann für den Benutzer sichtbar.
+- Der **Client** (z.B. ein Benutzergerät wie ein PC) agiert als Benutzervertretung. Der Browser des Clients wandelt eine vom Benutzer initiierte Anfrage in ein HTTP-konformes Format um und übermittelt diese an den Server.
+- Der **Server** verarbeitet die eingehende Anfrage, führt serverseitige Logik aus, manipuliert oder abfragt Daten und übermittelt eine HTTP-Antwort zurück an den Client. Der Browser rendert anschließend die empfangene Antwort, sodass der Benutzer die Inhalte visuell erfassen kann.
 
-Fast jede Interaktion im Web basiert auf diesem Prinzip: Der Client sendet Anfragen für Ressourcen, der Server verarbeitet sie und sendet die Antworten zurück.
+Die Interaktion im Web folgt im Wesentlichen diesem Grundsatz: Der Client fordert Ressourcen an, der Server verarbeitet diese Anforderungen und liefert entsprechende Antworten zurück. Dieses Modell bildet die Grundlage der gesamten Webkommunikation.
 
-### Inhalt einer HTTP-Anfrage
-HTTP-Anfragen sind strukturiert und bestehen aus folgenden Teilen:
+### Struktur einer HTTP-Anfrage
+HTTP-Anfragen sind formal strukturiert und bestehen typischerweise aus folgenden Komponenten:
 
-- **Methode**: Gibt die Art der Anfrage an (z.B. `GET` zum Abrufen von Daten, `POST` zum Senden und Verarbeiten von Daten).
-- **Pfad**: Gibt den Pfad der Ressource an (z.B. `/`, `/users`).
+- **Methode**: Gibt die Art der Interaktion mit der Ressource an, z.B. `GET` (zum Abrufen von Daten) oder `POST` (zum Übermitteln und Verarbeiten von Daten).
+- **Pfad**: Definiert den URI-Pfad zur Ressource (z.B. `/`, `/users`).
 - **Protokollversion**: Gibt die verwendete HTTP-Version an (z.B. HTTP/1.1).
-- **Header**: Enthalten zusätzliche Informationen wie den Host, akzeptierte Sprachen, Cookies usw.
+- **Header**: Enthalten zusätzliche Metadaten zur Anfrage, wie den Host, akzeptierte Medienformate, Cookies und weitere Kontextinformationen.
 
-Die Antwort des Servers enthält ebenfalls:
+Ein Beispiel einer einfachen HTTP GET-Anfrage lautet:
 
-- **Protokollversion** und **Statuscode** (z.B. `200 OK` für Erfolg, `400 Bad Request` für Client-Fehler, `500 Internal Server Error` für Server-Fehler).
-- **Header**: Informationen wie `Content-Type`, `Cache-Control` und Cookies.
-- Beide Teile (Anfrage und Antwort) können zusätzlich einen **Body** mit Daten enthalten, z.B. JSON-Daten oder Dateien.
+```http
+GET /users HTTP/1.1
+Host: example.com
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64)
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8
+```
+
+In diesem Beispiel fordert der Client die Ressource `/users` vom Server `example.com` an. Die Anfrage enthält Header, die spezifische Informationen zum Client und zu den bevorzugten Antwortformaten liefern.
+
+### HTTP-Methoden
+Die am häufigsten verwendeten HTTP-Methoden umfassen:
+
+- **GET**: Abruf einer Ressource. Diese Methode überträgt keinen Body in der Anfrage.
+- **POST**: Übermittlung von Daten an den Server, beispielsweise aus einem Webformular. Hierbei wird ein Request-Body verwendet, der die zu übermittelnden Nutzdaten enthält.
+- **PUT**: Aktualisierung einer existierenden Ressource.
+- **DELETE**: Löschen einer spezifischen Ressource.
+
+Ein Beispiel für eine HTTP POST-Anfrage sieht wie folgt aus:
+
+```http
+POST /login HTTP/1.1
+Host: example.com
+Content-Type: application/x-www-form-urlencoded
+Content-Length: 29
+
+username=testuser&password=1234
+```
+
+In diesem Beispiel sendet der Client Authentifizierungsdaten (Benutzername und Passwort) an den Server, um sich anzumelden. Die Daten werden als URL-kodierte Nutzlast im Request-Body übertragen.
+
+### HTTP-Antwort
+Die HTTP-Antwort eines Servers setzt sich ebenfalls aus mehreren Teilen zusammen:
+
+- **Protokollversion** und **Statuscode**: Diese Elemente geben den Status der Anfrageverarbeitung an. Beispielhafte Statuscodes sind:
+  - `200 OK`: Die Anfrage wurde erfolgreich verarbeitet.
+  - `404 Not Found`: Die angeforderte Ressource konnte nicht gefunden werden.
+  - `500 Internal Server Error`: Ein interner Fehler im Server verhinderte die Bearbeitung der Anfrage.
+
+- **Header**: Enthalten zusätzliche Informationen zur Antwort, wie beispielsweise den `Content-Type`, der den Medientyp der Antwort spezifiziert, oder `Set-Cookie`, um Sitzungsinformationen auf dem Client zu speichern.
+
+Ein Beispiel einer HTTP-Antwort könnte folgendermaßen aussehen:
+
+```http
+HTTP/1.1 200 OK
+Content-Type: application/json
+Content-Length: 85
+
+{
+  "id": 1,
+  "username": "testuser",
+  "email": "testuser@example.com"
+}
+```
+
+In diesem Fall liefert der Server eine erfolgreiche Antwort mit einer JSON-Nutzlast, die Benutzerdaten enthält. Die Struktur der Antwort erlaubt eine maschinelle Verarbeitung und erleichtert die Kommunikation zwischen Frontend und Backend.
+
+### Zusammenfassung
+HTTP bildet die technologische Grundlage der Webkommunikation. Das umfassende Verständnis der Struktur und Semantik von HTTP-Anfragen und -Antworten ist essenziell für die Durchführung von Web Pentesting, da zahlreiche Sicherheitslücken in diesen Interaktionen zu finden sind. Durch die tiefgehende Analyse und Manipulation dieser Kommunikation lassen sich Schwachstellen wie unzureichende Authentifizierung, mangelnde Eingabevalidierung oder unsichere Datenverarbeitung identifizieren und gezielt ausnutzen. Ein fundiertes Wissen über die Funktionsweise von HTTP ist somit eine Kernkompetenz für Sicherheitsforscher und Penetrationstester, um moderne Webanwendungen auf Schwachstellen zu überprüfen und deren Sicherheit zu gewährleisten.
+
 
 ## Aufbau einer Web-Applikation
 In der Realität sind Webanwendungen weitaus komplexer als das vereinfachte Client-Server-Modell. Ein typischer Aufbau umfasst:
 
+![image](https://www.aalpha.net/wp-content/uploads/2023/01/Components-of-Web-Application-Architecture.webp)
 - **Benutzer-Browser**: Das zentrale Element, das Anfragen an den DNS-Server sendet.
 - **DNS-Server**: Übersetzt Domainnamen in IP-Adressen.
 - **Load Balancer**: Verteilt Anfragen auf mehrere Webserver.
@@ -576,6 +633,8 @@ In der Realität sind Webanwendungen weitaus komplexer als das vereinfachte Clie
 - **Cloud Storage**: Speichert Daten langfristig.
 - **CDN (Content Delivery Network)**: Liefert statische Inhalte schnell aus.
 - **Data Warehouse**: Speichert große Datenmengen für Analysen.
+
+
 
 Diese vielschichtige Architektur bietet zahlreiche Angriffspunkte für das Pentesting.
 
