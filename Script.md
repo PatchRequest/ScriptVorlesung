@@ -12,6 +12,7 @@ Das Skript wird aktiv weiterentwickelt. Falls dir Fehler oder Verbesserungsmögl
 
 > (1) Wer unbefugt sich oder einem anderen Zugang zu Daten, die nicht für ihn bestimmt und die gegen unberechtigten Zugang besonders gesichert sind, unter Überwindung der Zugangssicherung verschafft, wird mit Freiheitsstrafe bis zu drei Jahren oder mit Geldstrafe bestraft.
 > (2) Daten im Sinne des Absatzes 1 sind nur solche, die elektronisch, magnetisch oder sonst nicht unmittelbar wahrnehmbar gespeichert sind oder übermittelt werden.
+
 Der Paragraf §202a des Strafgesetzbuchs behandelt das Ausspähen von Daten. Absatz 1 besagt, dass das unbefugte Verschaffen von Zugang zu besonders geschützten Daten eine Straftat darstellt, die mit einer Freiheitsstrafe von bis zu drei Jahren oder mit Geldstrafe geahndet wird. Das zentrale Kriterium hierbei ist das Wort "unbefugt", da es auf die Absicht des Handelnden abstellt. Auch das Überwinden von Zugangssicherungen, selbst wenn diese technisch schwach sind, gilt als strafbare Handlung. Absatz 2 präzisiert, dass dieser Paragraf nur für elektronisch oder magnetisch gespeicherte bzw. übermittelte Daten Anwendung findet.
 
 ### §202b: Abfangen von Daten 
@@ -25,12 +26,14 @@ Der Paragraf §202a des Strafgesetzbuchs behandelt das Ausspähen von Daten. Abs
 > 2.Computerprogramme, deren Zweck die Begehung einer solchen Tat ist,
 > herstellt, sich oder einem anderen verschafft, verkauft, einem anderen überlässt, verbreitet oder sonst zugänglich macht, wird mit Freiheitsstrafe bis zu zwei Jahren oder mit Geldstrafe bestraft.
 > 2) § 149 Abs. 2 und 3 gilt entsprechend.
+
 Dieser Paragraph deckt die Vorbereitungshandlungen ab, die für das Ausspähen oder Abfangen von Daten notwendig sind. Darunter fallen insbesondere sogenannte Hacking-Tools, sofern sie für das unbefugte Eindringen in Systeme verwendet werden sollen. Die Strafbarkeit richtet sich nach der Intention, mit der solche Werkzeuge eingesetzt werden. Sofern beispielsweise Tools zur Sicherheitsüberprüfung, also für legitime Penetrationstests verwendet werden, die im Vorfeld mit ausdrücklicher Zustimmung des Eigentümer der Systeme vereinbart wurden, besteht keine Strafbarkeit. Wichtig ist daher eine klare Abgrenzung zwischen legalen Anwendungen (z. B. Sicherheitstests) und böswilligen Absichten.
 
 ### §303a: Datenveränderung 
 > (1) Wer rechtswidrig Daten (§ 202a Abs. 2) löscht, unterdrückt, unbrauchbar macht oder verändert, wird mit Freiheitsstrafe bis zu zwei Jahren oder mit Geldstrafe bestraft.
 > (2) Der Versuch ist strafbar.
 > (3) Für die Vorbereitung einer Straftat nach Absatz 1 gilt § 202c entsprechend.
+
 §303a bestraft das unbefugte Löschen, Unterdrücken, Verändern oder Unbrauchbarmachen von Daten. Dieses Verhalten kann mit einer Freiheitsstrafe von bis zu zwei Jahren oder mit Geldstrafe belegt werden. Eine wichtige Ausnahme ist der Fall, dass eine ausdrückliche Erlaubnis des Dateneigentümer vorliegt. Dies ist zum Beispiel im Rahmen eines vereinbarten Stresstests der Fall, bei dem das Verhalten eines Systems unter hoher Last geprüft werden soll. Hier ist der rechtliche Rahmen entscheidend, um strafrechtliche Konsequenzen zu vermeiden.
 
 ### §303b: Computersabotage 
@@ -46,6 +49,7 @@ Dieser Paragraph deckt die Vorbereitungshandlungen ab, die für das Ausspähen o
 > 2. gewerbsmäßig oder als Mitglied einer Bande handelt, die sich zur fortgesetzten Begehung von Computersabotage verbunden hat,
 > 3. durch die Tat die Versorgung der Bevölkerung mit lebenswichtigen Gütern oder Dienstleistungen oder die Sicherheit der Bundesrepublik Deutschland beeinträchtigt.
 > (5) Für die Vorbereitung einer Straftat nach Absatz 1 gilt § 202c entsprechend.
+
 Dieser Paragraph bezieht sich auf die gezielte Störung von Datenverarbeitungsprozessen, insbesondere wenn diese den Betrieb von Unternehmen oder Behörden beeinträchtigen. Absatz 1 definiert Computersabotage als Eingriff in IT-Systeme, der zu einer Betriebsstörung führt. Besonders kritisch ist dies bei Angriffen auf IT-Infrastrukturen, die für die Versorgung der Öffentlichkeit relevant sind, wie Krankenhäuser oder Kraftwerke. Die Strafandrohung reicht hier bis zu fünf Jahren Freiheitsstrafe und zeigt die besondere Schwere solcher Eingriffe, insbesondere wenn sie die Versorgungssicherheit gefährden.
 
 ### §206: Verletzung des Fernmeldegeheimnisses
@@ -60,6 +64,7 @@ Dieser Paragraph bezieht sich auf die gezielte Störung von Datenverarbeitungspr
 > 3. mit der Herstellung einer dem Betrieb eines solchen Unternehmens dienenden Anlage oder mit Arbeiten daran betraut sind.
 > (4) Wer unbefugt einer anderen Person eine Mitteilung über Tatsachen macht, die ihm als außerhalb des Post- oder Telekommunikationsbereichs tätigem Amtsträger auf Grund eines befugten oder unbefugten Eingriffs in das Post- oder Fernmeldegeheimnis bekanntgeworden sind, wird mit Freiheitsstrafe bis zu zwei Jahren oder mit Geldstrafe bestraft.
 > (5) Dem Postgeheimnis unterliegen die näheren Umstände des Postverkehrs bestimmter Personen sowie der Inhalt von Postsendungen. Dem Fernmeldegeheimnis unterliegen der Inhalt der Telekommunikation und ihre näheren Umstände, insbesondere die Tatsache, ob jemand an einem Telekommunikationsvorgang beteiligt ist oder war. Das Fernmeldegeheimnis erstreckt sich auch auf die näheren Umstände erfolgloser Verbindungsversuche.
+
 Das Fernmeldegeheimnis ist in §206 StGB geregelt und betrifft das Abhören und Zugänglichmachen von nicht öffentlicher Telekommunikation an Dritte. Dies betrifft sowohl die Inhalte der Kommunikation als auch die zugehörigen Metadaten. Ein Penetrationstester, der in Kommunikationssysteme eindringt, könnte sich strafbar machen, wenn keine ausdrückliche Zustimmung der Kommunikationsparteien vorliegt. Hier ist besondere Vorsicht geboten, da der Schutz der Privatsphäre und der Vertraulichkeit der Kommunikation ein hohes rechtliches Gut darstellt.
 
 ### Fazit zur Rechtslage im Pentesting
