@@ -10,26 +10,56 @@ Das Skript wird aktiv weiterentwickelt. Falls dir Fehler oder Verbesserungsmögl
 ## 1.1 Relevante Paragraphen und rechtliche Grundlagen
 ### §202a: Ausspähen von Daten (Absätze 1 und 2)
 
+> (1) Wer unbefugt sich oder einem anderen Zugang zu Daten, die nicht für ihn bestimmt und die gegen unberechtigten Zugang besonders gesichert sind, unter Überwindung der Zugangssicherung verschafft, wird mit Freiheitsstrafe bis zu drei Jahren oder mit Geldstrafe bestraft.
+> (2) Daten im Sinne des Absatzes 1 sind nur solche, die elektronisch, magnetisch oder sonst nicht unmittelbar wahrnehmbar gespeichert sind oder übermittelt werden.
 Der Paragraf §202a des Strafgesetzbuchs behandelt das Ausspähen von Daten. Absatz 1 besagt, dass das unbefugte Verschaffen von Zugang zu besonders geschützten Daten eine Straftat darstellt, die mit einer Freiheitsstrafe von bis zu drei Jahren oder mit Geldstrafe geahndet wird. Das zentrale Kriterium hierbei ist das Wort "unbefugt", da es auf die Absicht des Handelnden abstellt. Auch das Überwinden von Zugangssicherungen, selbst wenn diese technisch schwach sind, gilt als strafbare Handlung. Absatz 2 präzisiert, dass dieser Paragraf nur für elektronisch oder magnetisch gespeicherte bzw. übermittelte Daten Anwendung findet.
 
 ### §202b: Abfangen von Daten 
+> Wer unbefugt sich oder einem anderen unter Anwendung von technischen Mitteln nicht für ihn bestimmte Daten (§ 202a Abs. 2) aus einer nichtöffentlichen Datenübermittlung oder aus der elektromagnetischen Abstrahlung einer Datenverarbeitungsanlage verschafft, wird mit Freiheitsstrafe bis zu zwei Jahren oder mit Geldstrafe bestraft, wenn die Tat nicht in anderen Vorschriften mit schwererer Strafe bedroht ist.
 
 §202b bezieht sich auf das unbefugte Abfangen von Daten aus nicht öffentlichen Übermittlungen. Darunter fällt sowohl das Abfangen von Datenübertragungen über elektromagnetische Strahlung als auch über kabelgebundene Kanäle. Das Abhören von Datenübertragungen, für die man keine ausdrückliche Erlaubnis besitzt, wird mit bis zu zwei Jahren Freiheitsstrafe oder mit Geldstrafe bestraft. Besonders hervorzuheben ist, dass der Einsatz technischer Mittel zur Erlangung nicht-autorisierten Zugangs explizit als strafbar eingestuft wird.
 
 ### §202c: Vorbereitung des Ausspähens und Abfangens von Daten
-
+> (1) Wer eine Straftat nach § 202a oder § 202b vorbereitet, indem er
+> 1. Passwörter oder sonstige Sicherungscodes, die den Zugang zu Daten (§ 202a Abs. 2) ermöglichen, oder
+> 2.Computerprogramme, deren Zweck die Begehung einer solchen Tat ist,
+> herstellt, sich oder einem anderen verschafft, verkauft, einem anderen überlässt, verbreitet oder sonst zugänglich macht, wird mit Freiheitsstrafe bis zu zwei Jahren oder mit Geldstrafe bestraft.
+> 2) § 149 Abs. 2 und 3 gilt entsprechend.
 Dieser Paragraph deckt die Vorbereitungshandlungen ab, die für das Ausspähen oder Abfangen von Daten notwendig sind. Darunter fallen insbesondere sogenannte Hacking-Tools, sofern sie für das unbefugte Eindringen in Systeme verwendet werden sollen. Die Strafbarkeit richtet sich nach der Intention, mit der solche Werkzeuge eingesetzt werden. Sofern beispielsweise Tools zur Sicherheitsüberprüfung, also für legitime Penetrationstests verwendet werden, die im Vorfeld mit ausdrücklicher Zustimmung des Eigentümer der Systeme vereinbart wurden, besteht keine Strafbarkeit. Wichtig ist daher eine klare Abgrenzung zwischen legalen Anwendungen (z. B. Sicherheitstests) und böswilligen Absichten.
 
 ### §303a: Datenveränderung 
-
+> (1) Wer rechtswidrig Daten (§ 202a Abs. 2) löscht, unterdrückt, unbrauchbar macht oder verändert, wird mit Freiheitsstrafe bis zu zwei Jahren oder mit Geldstrafe bestraft.
+> (2) Der Versuch ist strafbar.
+> (3) Für die Vorbereitung einer Straftat nach Absatz 1 gilt § 202c entsprechend.
 §303a bestraft das unbefugte Löschen, Unterdrücken, Verändern oder Unbrauchbarmachen von Daten. Dieses Verhalten kann mit einer Freiheitsstrafe von bis zu zwei Jahren oder mit Geldstrafe belegt werden. Eine wichtige Ausnahme ist der Fall, dass eine ausdrückliche Erlaubnis des Dateneigentümer vorliegt. Dies ist zum Beispiel im Rahmen eines vereinbarten Stresstests der Fall, bei dem das Verhalten eines Systems unter hoher Last geprüft werden soll. Hier ist der rechtliche Rahmen entscheidend, um strafrechtliche Konsequenzen zu vermeiden.
 
 ### §303b: Computersabotage 
-
+> (1) Wer eine Datenverarbeitung, die für einen anderen von wesentlicher Bedeutung ist, dadurch erheblich stört, dass er
+> 1. eine Tat nach § 303a Abs. 1 begeht,
+> 2. Daten (§ 202a Abs. 2) in der Absicht, einem anderen Nachteil zuzufügen, eingibt oder übermittelt oder
+> 3. eine Datenverarbeitungsanlage oder einen Datenträger zerstört, beschädigt, unbrauchbar macht, beseitigt oder verändert,
+> wird mit Freiheitsstrafe bis zu drei Jahren oder mit Geldstrafe bestraft.
+> (2) Handelt es sich um eine Datenverarbeitung, die für einen fremden Betrieb, ein fremdes Unternehmen oder eine Behörde von wesentlicher Bedeutung ist, ist die Strafe Freiheitsstrafe bis zu fünf Jahren oder Geldstrafe.
+> (3) Der Versuch ist strafbar.
+> (4) In besonders schweren Fällen des Absatzes 2 ist die Strafe Freiheitsstrafe von sechs Monaten bis zu zehn Jahren. Ein besonders schwerer Fall liegt in der Regel vor, wenn der Täter
+> 1. einen Vermögensverlust großen Ausmaßes herbeiführt,
+> 2. gewerbsmäßig oder als Mitglied einer Bande handelt, die sich zur fortgesetzten Begehung von Computersabotage verbunden hat,
+> 3. durch die Tat die Versorgung der Bevölkerung mit lebenswichtigen Gütern oder Dienstleistungen oder die Sicherheit der Bundesrepublik Deutschland beeinträchtigt.
+> (5) Für die Vorbereitung einer Straftat nach Absatz 1 gilt § 202c entsprechend.
 Dieser Paragraph bezieht sich auf die gezielte Störung von Datenverarbeitungsprozessen, insbesondere wenn diese den Betrieb von Unternehmen oder Behörden beeinträchtigen. Absatz 1 definiert Computersabotage als Eingriff in IT-Systeme, der zu einer Betriebsstörung führt. Besonders kritisch ist dies bei Angriffen auf IT-Infrastrukturen, die für die Versorgung der Öffentlichkeit relevant sind, wie Krankenhäuser oder Kraftwerke. Die Strafandrohung reicht hier bis zu fünf Jahren Freiheitsstrafe und zeigt die besondere Schwere solcher Eingriffe, insbesondere wenn sie die Versorgungssicherheit gefährden.
 
 ### §206: Verletzung des Fernmeldegeheimnisses
-
+> (1) Wer unbefugt einer anderen Person eine Mitteilung über Tatsachen macht, die dem Post- oder Fernmeldegeheimnis unterliegen und die ihm als Inhaber oder Beschäftigtem eines Unternehmens bekanntgeworden sind, das geschäftsmäßig Post- oder Telekommunikationsdienste erbringt, wird mit Freiheitsstrafe bis zu fünf Jahren oder mit Geldstrafe bestraft.
+> (2) Ebenso wird bestraft, wer als Inhaber oder Beschäftigter eines in Absatz 1 bezeichneten Unternehmens unbefugt
+> 1. eine Sendung, die einem solchen Unternehmen zur Übermittlung anvertraut worden und verschlossen ist, öffnet oder sich von ihrem Inhalt ohne Öffnung des Verschlusses unter Anwendung technischer Mittel Kenntnis verschafft,
+> 2. eine einem solchen Unternehmen zur Übermittlung anvertraute Sendung unterdrückt oder
+> 3. eine der in Absatz 1 oder in Nummer 1 oder 2 bezeichneten Handlungen gestattet oder fördert.
+> (3) Die Absätze 1 und 2 gelten auch für Personen, die
+> 1. Aufgaben der Aufsicht über ein in Absatz 1 bezeichnetes Unternehmen wahrnehmen,
+> 2. von einem solchen Unternehmen oder mit dessen Ermächtigung mit dem Erbringen von Post- oder Telekommunikationsdiensten betraut sind oder
+> 3. mit der Herstellung einer dem Betrieb eines solchen Unternehmens dienenden Anlage oder mit Arbeiten daran betraut sind.
+> (4) Wer unbefugt einer anderen Person eine Mitteilung über Tatsachen macht, die ihm als außerhalb des Post- oder Telekommunikationsbereichs tätigem Amtsträger auf Grund eines befugten oder unbefugten Eingriffs in das Post- oder Fernmeldegeheimnis bekanntgeworden sind, wird mit Freiheitsstrafe bis zu zwei Jahren oder mit Geldstrafe bestraft.
+> (5) Dem Postgeheimnis unterliegen die näheren Umstände des Postverkehrs bestimmter Personen sowie der Inhalt von Postsendungen. Dem Fernmeldegeheimnis unterliegen der Inhalt der Telekommunikation und ihre näheren Umstände, insbesondere die Tatsache, ob jemand an einem Telekommunikationsvorgang beteiligt ist oder war. Das Fernmeldegeheimnis erstreckt sich auch auf die näheren Umstände erfolgloser Verbindungsversuche.
 Das Fernmeldegeheimnis ist in §206 StGB geregelt und betrifft das Abhören und Zugänglichmachen von nicht öffentlicher Telekommunikation an Dritte. Dies betrifft sowohl die Inhalte der Kommunikation als auch die zugehörigen Metadaten. Ein Penetrationstester, der in Kommunikationssysteme eindringt, könnte sich strafbar machen, wenn keine ausdrückliche Zustimmung der Kommunikationsparteien vorliegt. Hier ist besondere Vorsicht geboten, da der Schutz der Privatsphäre und der Vertraulichkeit der Kommunikation ein hohes rechtliches Gut darstellt.
 
 ### Fazit zur Rechtslage im Pentesting
@@ -38,7 +68,7 @@ Die gesetzliche Lage zeigt, dass Penetrationstests ohne ausdrückliche und schri
 
 
 
-## 1.2 Ablauf und Herausforderungen bei Responsible Disclosure
+## Ablauf und Herausforderungen bei Responsible Disclosure
 
 
 Security Researcher und Pentester stoßen häufig auf Schwachstellen in Systemen, die von geringfügig bis hin zu systemgefährdend reichen können. Das Konzept der Responsible Disclosure ermutigt dazu, solche Schwachstellen verantwortungsbewusst zu melden, ohne sie auszunutzen oder öffentlich zu machen. Dadurch können Organisationen die Schwachstellen beheben, ohne rechtliche Schritte gegen die Entdecker zu unternehmen.
@@ -64,37 +94,44 @@ Um rechtliche Risiken zu minimieren, kann Responsible Disclosure anonym durchgef
 
 Responsible Disclosure ist ein komplexes Thema, das mit rechtlichen Unsicherheiten verbunden ist. Um Risiken zu minimieren, kann der anonyme Weg über Vermittler wie den CERT-Bund eine sinnvolle Option sein. Zudem sollten Sicherheitsforscher darauf achten, ihre Berichte so präzise und konstruktiv wie möglich zu formulieren, um eine reibungslose Behebung der Schwachstelle zu ermöglichen.
 
-## 1.3 Verhaltenstipps, Lernressourcen, Zertifizierung und Knowledgebase
+## Verhaltenstipps, Lernressourcen, Zertifizierungen und Knowledgebase
 
 ### Verhaltenstipps
-Als Security Researcher ist es entscheidend, immer vorsichtig und verantwortungsvoll vorzugehen. Obwohl die Neugier ein starker Antrieb ist, sollte man sich bewusst sein, dass gefundene Schwachstellen im Internet reale Auswirkungen haben können. Ein Beispiel dafür ereignete sich auf der DEFCON, als Bluetooth-Spam-Angriffe mit einem Flipper Zero dazu führten, dass eine Insulinpumpe abstürzte – eine Situation, die ernsthafte gesundheitliche Risiken verursachen kann. Es ist daher von großer Bedeutung, Zurückhaltung zu zeigen, um unbeabsichtigte Schäden zu vermeiden.
+Das Verhalten eines Security Researchers sollte stets von Verantwortung, Bedacht und ethischer Integrität geprägt sein. Sicherheitsexperten sind oft mit Schwachstellen konfrontiert, die im echten Leben potenziell schwerwiegende Konsequenzen haben können. Neugier und das Bestreben, technische Grenzen auszuloten, sind zweifellos wichtige Triebfedern in der Informationssicherheit, doch sollte nie vergessen werden, dass jede gefundene Schwachstelle reale Auswirkungen auf Menschen und Unternehmen haben kann. Ein anschauliches Beispiel dafür ist der Vorfall auf der DEFCON, bei dem Bluetooth-Spam-Angriffe unter Einsatz eines Flipper Zero dazu führten, dass eine Insulinpumpe unerwartet ausfiel – ein Vorfall, der ernste gesundheitliche Gefahren zur Folge hatte.
+
+Solche Beispiele verdeutlichen, wie wichtig Zurückhaltung und ein klares Verständnis für ethische Grundsätze sind. Als Security Researcher trägt man eine große Verantwortung dafür, entdeckte Sicherheitslücken auf verantwortungsvolle Weise zu melden und sicherzustellen, dass keine unbeabsichtigten Schäden entstehen. Die Arbeit sollte niemals für destruktive Zwecke missbraucht werden, und das Abwägen von Risiken und Nutzen ist entscheidend, um einen positiven Beitrag zur Cybersicherheit zu leisten.
 
 ### Lernressourcen
-Die kontinuierliche Weiterbildung ist essenziell für die Entwicklung von Fähigkeiten als Security Researcher. Hier sind einige empfohlene Ressourcen:
+Für die Entwicklung und den Ausbau von Fähigkeiten im Bereich Cyber Security ist kontinuierliche Weiterbildung unabdingbar. Die nachfolgenden Ressourcen bieten eine fundierte Grundlage für das Lernen und Vertiefen von Kenntnissen:
 
-- **Websites zum Übung von Angriffen**:
-  - **HackTheBox**: Ermöglicht das Training von realistischen Angriffsszenarien in isolierten Umgebungen.
-  - **TryHackMe**: Ideal für Einsteiger bis Fortgeschrittene mit interaktiven Tutorials.
-  - **VulnHub**: Bietet kostenlose VMs zum Download, um Schwachstellen in einem eigenen Lab zu üben.
-  - **BurpSuite Academy**: Ein hervorragender Ort, um Web-Exploitation zu lernen.
+- **Websites für das Üben von Angriffsszenarien**:
+  - **HackTheBox**: HackTheBox bietet realistische Übungsszenarien in abgeschlossenen Umgebungen. Die Herausforderungen reichen von leicht bis extrem anspruchsvoll und spiegeln reale Angriffstechniken wider.
+  - **TryHackMe**: Eine hervorragende Plattform, die Anfänger wie auch Fortgeschrittene durch interaktive Tutorials begleitet. Die Inhalte reichen von Grundlagen bis hin zu komplexeren Exploits.
+  - **VulnHub**: VulnHub bietet kostenlose, herunterladbare virtuelle Maschinen, auf denen verschiedene Schwachstellen geübt werden können. Dies ist besonders nützlich, um offline und in einer isolierten Umgebung zu trainieren.
+  - **Burp Suite Academy**: Eine exzellente Plattform zum Lernen von Web-Angriffen. Burp Suite Academy bietet umfassende Tutorials zur sicheren Nutzung von Burp Suite und deckt verschiedene Schwachstellen ab, von SQL-Injection bis zu Cross-Site Scripting.
 
-- **Einrichtung eines eigenen Labs**: Um praktische Übungen durchzuführen, empfiehlt es sich, ein eigenes Lab einzurichten. Dies ermöglicht, verschiedene Tools auszuprobieren und sich in einer sicheren Umgebung mit Schwachstellen zu befassen.
+- **Eigenes Lab für praktische Übungen**: Das Aufsetzen eines eigenen Labs ist ein weiterer wichtiger Schritt für angehende Security Researchers. Mit Tools wie VirtualBox, VMware oder Docker können isolierte Umgebungen erstellt werden, in denen man nach Belieben Tools testen und Exploits übersetzen kann, ohne reale Systeme zu gefährden.
 
-- **Nützliche YouTube-Kanäle**: Diese Kanäle bieten exzellente Lerninhalte, die praxisorientierte Techniken vermitteln:
-  - **John Hammond**
-  - **LiveOverflow**
-  - **IppSec**
-  - **NahamSec**
-  - **HackerSploit**
+- **Empfohlene YouTube-Kanäle**: Auf YouTube gibt es zahlreiche Kanäle, die exzellente praxisorientierte Inhalte bieten. Besonders empfehlenswert sind:
+  - **John Hammond**: Für tiefgehende Erklärungen und umfassende Walkthroughs von CTF-Challenges.
+  - **LiveOverflow**: Ein Kanal, der komplexe Schwachstellen und Exploits auf eine leicht verständliche Weise erklärt.
+  - **IppSec**: Bekannt für seine detaillierten HackTheBox-Walkthroughs, die einen sehr praxisnahen Einblick in Penetration Testing bieten.
+  - **NahamSec** und **HackerSploit**: Beide Kanäle bieten eine gute Mischung aus Grundlagen und tiefergehenden technischen Analysen.
 
 ### Zertifizierungen
-Zertifizierungen sind wichtig, um potenziellen Arbeitgebern oder Kunden die eigenen Kompetenzen nachzuweisen. Zu den bekanntesten Zertifikaten gehören:
+Zertifizierungen spielen eine wichtige Rolle im Bereich der Cybersicherheit. Sie sind nicht nur ein Beleg für die eigenen Fähigkeiten, sondern bieten auch eine strukturierte Lernmöglichkeit, um bestimmte Themenfelder fundiert zu erarbeiten. Die wichtigsten und bekanntesten Zertifikate sind:
 
-- **OSCP** (Offensive Security Certified Professional): Gilt als der Goldstandard unter den Zertifikaten im Bereich Penetration Testing.
-- **CEH** (Certified Ethical Hacker): Ein weiteres populäres Zertifikat, das Grundlagen abdeckt.
-- **CRTP** (Certified Red Team Professional): Eine ausgezeichnete Zertifizierung für Red Teaming und Active Directory Angriffe.
+- **OSCP (Offensive Security Certified Professional)**: Die OSCP-Zertifizierung wird oft als der Goldstandard im Bereich Penetration Testing angesehen. Die Prüfung setzt eine umfassende praktische Kompetenz voraus und erfordert, dass der Kandidat in einer 24-stündigen Prüfung mehrere Maschinen erfolgreich kompromittiert.
+- **CEH (Certified Ethical Hacker)**: Das CEH-Zertifikat bietet eine Einführung in die Grundlagen des Ethical Hacking. Es ist besonders geeignet für Einsteiger, die ein strukturiertes Framework zum Lernen der grundlegenden Angriffstechniken suchen.
+- **CRTP (Certified Red Team Professional)**: Das CRTP-Zertifikat ist besonders wertvoll für diejenigen, die sich im Bereich Red Teaming spezialisieren möchten, insbesondere bei Angriffen auf Active Directory. Es kombiniert praktische Übungen mit soliden theoretischen Grundlagen.
 
-Weitere Informationen zu Zertifizierungen und eine Roadmap, die einen Überblick über den Zertifizierungsweg gibt, sind [hier online verfügbar](https://pauljerimy.com/security-certification-roadmap/).
+Weitere Informationen zu relevanten Zertifizierungen sowie eine überblicksartige Roadmap sind online verfügbar. Ein besonders hilfreicher Überblick ist unter [diesem Link](https://pauljerimy.com/security-certification-roadmap/) zu finden, welcher einen umfassenden Einblick in den Zertifizierungsweg im Bereich der IT-Sicherheit gibt.
+
+![image](https://www.stationx.net/wp-content/uploads/2023/09/image-6.jpeg)
+
+Das Wissen um diese Zertifikate hilft nicht nur beim persönlichen Kompetenzaufbau, sondern auch bei der Orientierung in einer sich ständig verändernden Berufslandschaft.
+
+
 
 ### Knowledgebase
 
