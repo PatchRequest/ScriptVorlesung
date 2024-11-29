@@ -211,8 +211,6 @@ Datenpunkte können aus einer Vielzahl unterschiedlicher Quellen stammen, die es
 - **Sonstige Websites**: Hierzu gehören zahlreiche andere Informationsquellen, darunter **Foren**, **Nachrichtenportale**, **APIs**, **Videos/TV** und **KI-basierte Inhalte**. Foren, etwa im Darknet oder spezialisierte technische Plattformen, können wichtige Hintergrundinformationen bieten. APIs bieten automatisierte Zugänge zu umfangreichen Datensätzen, die anderenfalls nicht systematisch durchsuchbar wären. Auch Medienquellen, sei es in Form von Nachrichtenportalen oder TV-Sendungen, können wichtige kontextuelle Informationen zu aktuellen Ereignissen liefern, die für eine vollständige OSINT-Analyse unerlässlich sind.
 
 
-
-
 ### Social Media
 
 - **Fragen zur Selbstreflexion**: Wie viele Profile haben Sie? Kennen Sie alle veröffentlichten Informationen? Ist Ihnen Ihre Privatsphäre wichtig?
@@ -309,8 +307,6 @@ Im Folgenden wird der detaillierte Ablauf beschrieben:
 
 6. **AP-REP (Application Response)**: Der angefragte Dienst prüft das Service Ticket und den Authenticator. Wenn beide erfolgreich verifiziert werden, wird der Zugriff gewährt. Optional kann der Dienst eine Antwort an den Benutzer zurücksenden, um die erfolgreiche Authentifizierung zu bestätigen.
 
-
-
 ### Schlüssel und Tickets im Kerberos-Protokoll
 
 - **Geheimer Benutzer-Schlüssel**: Wird verwendet, um den Authenticator zu verschlüsseln, den der Benutzer an den KDC sendet.
@@ -322,6 +318,30 @@ Im Folgenden wird der detaillierte Ablauf beschrieben:
 
 Das Kerberos-Protokoll stellt sicher, dass die Anmeldeinformationen des Benutzers nicht im Klartext über das Netzwerk übertragen werden, wodurch es gegen Abhörangriffe resistent ist. Die Verwendung von Zeitstempeln in den Authenticators schützt zusätzlich vor Replay-Angriffen. Der Einsatz von symmetrischen Verschlüsselungstechniken sorgt dafür, dass nur autorisierte Parteien auf die Schlüssel und Tickets zugreifen können.
 
+### NTLM-Protokollablauf
+
+Das NTLM (NT LAN Manager) Protokoll ist ein Authentifizierungsprotokoll, das ursprünglich von Microsoft entwickelt wurde und immer noch in vielen Legacy-Systemen und Umgebungen, die keine Kerberos-Unterstützung haben, verwendet wird. NTLM basiert auf einem Challenge-Response-Mechanismus, um die Identität von Benutzern zu verifizieren, ohne das Passwort im Klartext über das Netzwerk zu senden. Der Ablauf besteht aus mehreren Schritten zwischen dem Client, dem Server und dem Domain Controller (falls vorhanden).
+
+Im Folgenden wird der detaillierte Ablauf beschrieben:
+
+1. **Negotiate Message**: Der Client, der sich gegenüber einem Server authentifizieren möchte, sendet eine **Negotiate Message** an den Server. Diese Nachricht enthält Informationen über die vom Client unterstützten NTLM-Funktionen und verschlüsselte Daten, die die Authentifizierung erleichtern sollen.
+
+2. **Challenge Message**: Der Server empfängt die Negotiate Message und antwortet mit einer **Challenge Message**. Diese Nachricht enthält eine **Server Challenge**, die als zufällige Zahl (Nonce) generiert wird. Diese Challenge wird verwendet, um sicherzustellen, dass die Authentifizierung sicher erfolgt und nicht durch Replay-Angriffe kompromittiert werden kann.
+
+3. **Authenticate Message**: Der Client empfängt die Challenge und berechnet eine **Response**, die auf der Challenge sowie auf einem Hash des Benutzerpassworts basiert. Der Hash wird durch den NTLM Hashing-Algorithmus generiert, wobei das Benutzerpasswort niemals im Klartext übertragen wird. Diese berechnete Antwort wird dann in der **Authenticate Message** an den Server gesendet.
+
+4. **Verifikation und Zugriff**: Der Server prüft die Antwort des Clients, indem er eine eigene Version der Response basierend auf den ihm bekannten Benutzerinformationen und der Challenge berechnet. Wenn die vom Client gesendete Antwort und die vom Server berechnete Antwort übereinstimmen, ist die Authentifizierung erfolgreich und der Zugriff wird gewährt.
+
+Optional kann der Server, falls er Teil einer Domäne ist, die Authentifizierungsinformationen an den **Domain Controller** weiterleiten, um die Anmeldeinformationen zu verifizieren. Der Domain Controller berechnet ebenfalls die Challenge-Response und bestätigt oder verweigert die Authentifizierung.
+
+Der NTLM-Protokollablauf kann folgendermaßen zusammengefasst werden:
+
+1. **Client → Server**: Negotiate Message
+2. **Server → Client**: Challenge Message (enthält Nonce)
+3. **Client → Server**: Authenticate Message (enthält Challenge Response)
+4. **Server**: Verifikation der Antwort und Entscheidung über Zugriff
+
+NTLM ist zwar weniger sicher als Kerberos, da es anfällig für Angriffe wie Pass-the-Hash ist, wird aber in bestimmten Szenarien noch immer eingesetzt, insbesondere wenn Kompatibilität zu älteren Systemen notwendig ist.
 
 
 ## Angriffe auf Active Directory
@@ -333,7 +353,19 @@ Obwohl Active Directory ein robustes System ist, gibt es verschiedene Angriffsve
 
 Exploits können durch Patches behoben werden, Abuses erfordern jedoch oft komplexere Maßnahmen, da sie die Funktionalität des Systems selbst betreffen.
 
-## Zwischen Fazit
+## Toolliste
+
+1. **Impacket** - Sammlung von Python-Klassen für Netzwerkprotokolle, häufig verwendet für Angriffe im Windows-Umfeld.
+2. **Rubeus** - Ein Tool zur Interaktion mit Kerberos-Tickets, nützlich für Credential Theft.
+3. **Lsassy** - Automatisiert das Auslesen von Passwörtern und Hashes aus dem LSASS-Prozess.
+4. **Mimikatz** - Bekanntes Tool zum Extrahieren von Anmeldeinformationen aus dem Speicher, Dumping von Passwort-Hashes, Kerberos-Tickets usw.
+5. **Bloodhound** - Tool zur Visualisierung und Analyse von Active Directory Rechten und Angriffswegen.
+6. **Hashcat** - Leistungsfähiges Passwort-Cracking-Tool, unterstützt viele Hash-Typen.
+7. **NetExec** - Führt Befehle auf entfernten Windows-Hosts aus.
+8. **Responder** - LLMNR, NBT-NS und MDNS Poisoner, verwendet für Man-in-the-Middle-Angriffe im lokalen Netzwerk.
+10. **evil-winrm** - Windows Remote Management (WinRM) Shell, häufig genutzt für die Post-Exploitation.
+
+## Zwischenfazit
 
 Im Alltag dient Active Directory zur Authentifizierung von Benutzern und Admins gegenüber Objekten, Systemen und der Domäne selbst. Dies geschieht über die Protokolle **Kerberos** und **NTLM**. DNS-Anfragen werden über Active Directory abgewickelt, um die richtigen Systeme zu finden und Load Balancing zu ermöglichen. Das Directory dient auch zur zentralen Speicherung und zum Abruf von Informationen. Die Konfiguration des gesamten Systems erfolgt zentral und kann durch **GPOs** automatisiert und an einzelne Gruppen oder Benutzer angepasst werden.
 
@@ -341,9 +373,6 @@ Im Alltag dient Active Directory zur Authentifizierung von Benutzern und Admins 
 
 In diesem Abschnitt der Vorlesung werden beispielhafte Angriffe gegen Active Directory dargestellt, die als eine potenzielle Kill Chain beschrieben werden. Die Reihenfolge der Schritte kann dabei variieren oder wiederholt werden. Die vorgestellten Angriffe sind nur ein kleiner Ausschnitt aus dem breiten Spektrum an möglichen Angriffen.
 
-# Angriffsszenario gegen Active Directory
-
-In diesem Abschnitt der Vorlesung werden beispielhafte Angriffe gegen Active Directory dargestellt, die als eine potenzielle Kill Chain beschrieben werden. Die Reihenfolge der Schritte kann dabei variieren oder wiederholt werden. Die vorgestellten Angriffe sind nur ein kleiner Ausschnitt aus dem breiten Spektrum an möglichen Angriffen.
 
 ## 1. Lokale Privilegieneskalation
 Der erste Schritt einer solchen Kill Chain ist oft die lokale Privilegieneskalation, um lokale Administratorrechte zu erlangen. Dies kann auf verschiedene Weise erfolgen, wobei Tools wie **WinPEAS** zur automatisierten Prüfung genutzt werden. Zwei wichtige Methoden sind:
