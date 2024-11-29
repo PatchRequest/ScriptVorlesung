@@ -257,16 +257,34 @@ Für die Authentifizierung innerhalb von Active Directory werden zwei Protokolle
 
 ### Kerberos-Protokollablauf
 
-Das Kerberos-Protokoll arbeitet Ticket-basiert und verwendet drei Entitäten:
+Das Kerberos-Protokoll ist ein zentraler Bestandteil der Authentifizierung in vielen Netzwerken, insbesondere in Active Directory-Umgebungen. Es basiert auf einem Ticket-basierten System und verwendet kryptografische Schlüssel, um eine sichere Authentifizierung zwischen Clients und Diensten zu gewährleisten. Das Protokoll besteht aus drei Hauptentitäten: dem Client, dem Key Distribution Center (KDC), und den Diensten, auf die der Benutzer zugreifen möchte. Der KDC selbst ist weiter in zwei Teile untergliedert: den **Authentication Service (AS)** und den **Ticket Granting Service (TGS)**.
 
-1. **AS-REQ (Authentication Service Request)**: Der Benutzer sendet eine Anfrage an den KDC, die seinen Benutzernamen und einen verschlüsselten Authenticator enthält.
-2. **AS-REP (Authentication Service Response)**: Der KDC sendet dem Benutzer ein Ticket-Granting Ticket (TGT) zurück, das einen Session Key enthält.
-3. **TGS-REQ (Ticket-Granting Service Request)**: Der Benutzer sendet das TGT, um auf einen bestimmten Service zuzugreifen.
-4. **TGS-REP (Ticket-Granting Service Response)**: Der KDC erstellt ein Service Ticket (TGS) und sendet es an den Benutzer.
-5. **AP-REQ (Application Request)**: Der Benutzer sendet das TGS an den Service.
-6. **AP-REP (Application Response)**: Der Service gewährt dem Benutzer Zugriff.
+Im Folgenden wird der detaillierte Ablauf beschrieben:
 
-Dieses Verfahren stellt sicher, dass die Anmeldeinformationen des Benutzers nicht im Netzwerk übertragen werden und somit vor Abhörangriffen geschützt sind.
+1. **AS-REQ (Authentication Service Request)**: Der Benutzer, der sich am Netzwerk anmelden möchte, sendet eine Anfrage an den KDC. Diese Anfrage enthält den Benutzernamen und einen Authenticator, der mit dem Geheimschlüssel des Benutzers verschlüsselt ist. Dieser Authenticator besteht aus einem Zeitstempel und wird genutzt, um Replay-Angriffe zu verhindern.
+
+2. **AS-REP (Authentication Service Response)**: Der KDC überprüft die Anfrage und stellt sicher, dass der Benutzer berechtigt ist, ein Ticket zu erhalten. Wenn die Anfrage gültig ist, sendet der KDC ein **Ticket Granting Ticket (TGT)** zurück. Dieses TGT ist mit dem geheimen Schlüssel des KDC verschlüsselt und enthält einen Session Key, der zur Kommunikation zwischen dem Benutzer und dem KDC verwendet wird. Außerdem wird der Session Key an den Benutzer zurückgesendet, jedoch mit dem geheimen Schlüssel des Benutzers verschlüsselt.
+
+3. **TGS-REQ (Ticket-Granting Service Request)**: Wenn der Benutzer auf einen bestimmten Dienst zugreifen möchte, sendet er eine Anfrage an den Ticket Granting Service (TGS). Diese Anfrage beinhaltet das zuvor erhaltene TGT sowie einen neuen Authenticator, der mit dem Session Key verschlüsselt wurde. Dieser Schritt dient dazu, die Identität des Benutzers zu authentifizieren und sicherzustellen, dass das TGT noch gültig ist.
+
+4. **TGS-REP (Ticket-Granting Service Response)**: Der TGS prüft das TGT und den Authenticator. Wenn beide als gültig erkannt werden, erstellt der TGS ein **Service Ticket**. Dieses Service Ticket ist für den spezifischen Dienst bestimmt, auf den der Benutzer zugreifen möchte, und wird sowohl an den Benutzer als auch an den Service verschlüsselt weitergegeben.
+
+5. **AP-REQ (Application Request)**: Der Benutzer sendet das erhaltene Service Ticket an den gewünschten Dienst. Dieser Schritt wird als **Application Request** bezeichnet und enthält das Service Ticket sowie einen weiteren Authenticator, der mit dem Session Key verschlüsselt ist. Das Service Ticket dient als Nachweis dafür, dass der Benutzer berechtigt ist, auf den Dienst zuzugreifen.
+
+6. **AP-REP (Application Response)**: Der angefragte Dienst prüft das Service Ticket und den Authenticator. Wenn beide erfolgreich verifiziert werden, wird der Zugriff gewährt. Optional kann der Dienst eine Antwort an den Benutzer zurücksenden, um die erfolgreiche Authentifizierung zu bestätigen.
+
+### Schlüssel und Tickets im Kerberos-Protokoll
+
+- **Geheimer Benutzer-Schlüssel**: Wird verwendet, um den Authenticator zu verschlüsseln, den der Benutzer an den KDC sendet.
+- **Session Key**: Ein temporärer Schlüssel, der zwischen dem Benutzer und dem KDC sowie zwischen dem Benutzer und dem Dienst verwendet wird, um die Kommunikation zu sichern.
+- **Ticket Granting Ticket (TGT)**: Ein Ticket, das dem Benutzer den Zugang zu weiteren Diensten über den TGS ermöglicht, ohne dass das Passwort erneut eingegeben werden muss.
+- **Service Ticket**: Ein Ticket, das dem Benutzer den Zugang zu einem spezifischen Dienst ermöglicht.
+
+### Sicherheit im Kerberos-Protokoll
+
+Das Kerberos-Protokoll stellt sicher, dass die Anmeldeinformationen des Benutzers nicht im Klartext über das Netzwerk übertragen werden, wodurch es gegen Abhörangriffe resistent ist. Die Verwendung von Zeitstempeln in den Authenticators schützt zusätzlich vor Replay-Angriffen. Der Einsatz von symmetrischen Verschlüsselungstechniken sorgt dafür, dass nur autorisierte Parteien auf die Schlüssel und Tickets zugreifen können.
+
+
 
 ## Angriffe auf Active Directory
 
