@@ -6,33 +6,6 @@ Dieses Dokument ist der aktuelle Ansatz für das Vorlesungsskript, aber es ist n
 
 Das Skript wird aktiv weiterentwickelt. Falls dir Fehler oder Verbesserungsmöglichkeiten auffallen oder dir wichtige Inhalte fehlen, würde ich mich sehr über deinen Beitrag freuen – gerne per Pull Request.
 
-
-
-# Table of Contents
-
-1. Rahmbedingungen
-   - 1.1 Relevante Paragraphen und rechtliche Grundlagen
-   - 1.2 Ablauf und Herausforderungen bei Responsible Disclosure
-   - 1.4 Verhaltenstipps, Lernressourcen, Zertifizierungen und Knowledge-Base
-2. OSINT (Open Source Intelligence)
-   - 2.1 Definition und Anwendungsbereiche
-   - 2.2 Datenquellen und Datenpunkte
-   - 2.3 Verknüpfung und Analyse von Datenpunkten
-   - 2.4 Aufbau von Informationsnetzwerken und Communities
-3. Active Directory
-   - 3.1 Aufbau und Komponenten (Kerberos, LDAP, DNS, SMB)
-   - 3.2 Domain Controller, Domänenobjekte
-   - 3.3 Authentifizierungsprozesse (NTLM, Kerberos)
-   - 3.4 Angriffe: Enumeration, Pass-the-Hash, Credential Dumping, etc.
-4. Web-Sicherheit
-   - 4.1 Aufbau von Web-Apps und HTTP
-   - 4.2 Beispielhafte Angriffe: XSS, SQL-Injection, CSRF, etc.
-5. Cybercrime
-   - 5.1 Täterprofile und Motivationen
-   - 5.2 Struktur von Cybercrime-Netzwerken
-
-
-
 # 1. Rahmenbedingungen
 ## 1.1 Relevante Paragraphen und rechtliche Grundlagen
 ### §202a: Ausspähen von Daten (Absätze 1 und 2)
