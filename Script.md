@@ -367,11 +367,40 @@ In diesem Abschnitt der Vorlesung werden beispielhafte Angriffe gegen Active Dir
 
 
 ## 1. Lokale Privilegieneskalation
-Der erste Schritt einer solchen Kill Chain ist oft die lokale Privilegieneskalation, um lokale Administratorrechte zu erlangen. Dies kann auf verschiedene Weise erfolgen, wobei Tools wie **WinPEAS** zur automatisierten Prüfung genutzt werden. Zwei wichtige Methoden sind:
 
-- **Unquoted Service Paths**: Bei einigen Diensten kann der Pfad zur ausführbaren Datei Leerzeichen enthalten. Durch die Art, wie Windows die Suchreihenfolge bei der Pfadangabe handhabt, kann der Angreifer eine eigene Datei erstellen, die anstelle der eigentlichen Datei vom Dienst ausgeführt wird. Dieser Dienst läuft typischerweise mit hohen Rechten.
+Die lokale Privilegieneskalation ist ein entscheidender Schritt in der Kill Chain eines Angriffs, bei dem ein Angreifer versucht, von einem normalen Benutzerkonto zu Administratorrechten aufzusteigen. Dies ermöglicht es ihm, größere Kontrolle über das System zu erlangen, Schadsoftware mit mehr Privilegien auszuführen, oder sich weiter im Netzwerk zu bewegen.
 
-- **Modifiable Service Files**: Hierbei wird die Datei, die von einem Dienst ausgeführt wird, durch eine manipulierte Version ersetzt, die dem Angreifer Administratorrechte oder eine Shell mit höheren Rechten verschafft.
+### **Unquoted Service Paths**:
+
+- **Wie es funktioniert**:
+  - **Dienste in Windows** haben oft Pfade zu den ausführbaren Dateien, die sie starten sollen. Wenn dieser Pfad **nicht in Anführungszeichen** steht und **Leerzeichen** enthält, kann dies zu einer Unsicherheit führen.
+  - Windows durchsucht die Verzeichnisse gemäß dem Pfad und versucht, den Dienst zu starten. Wenn es z.B. einen Dienst gibt, dessen Pfad so aussieht: `C:\Program Files\Vulnerableservice\Service.exe`, wird Windows zuerst versuchen:
+
+    1. `C:\Program.exe`
+    2. `C:\Program Files\Vulnerableservice\Service.exe`
+
+  - Ein Angreifer könnte eine Datei namens `Program.exe` in `C:\` platzieren. Bei einem Systemneustart oder Dienstneustart, könnte das System diese Datei ausführen, da sie zuerst gefunden wird.
+
+- **Ausführung**:
+  - Der Angreifer erstellt eine bösartige Datei, die die gleiche Position im Pfad einnimmt wie die eigentliche Dienstdatei, bevor die eigentliche Datei gefunden wird.
+  - Diese Datei könnte einen Malware-Payload enthalten, der mit den Rechten des Dienstes ausgeführt wird, oft mit Administratorrechten.
+
+### **Modifiable Service Files**:
+
+- **Wie es funktioniert**:
+  - Ein Dienst könnte so konfiguriert sein, dass er eine Datei ausführt, die **schreibbar** ist, entweder durch das Dateisystem-Berechtigungen oder durch eine Schwäche in der Dienstkonfiguration.
+  - Der Angreifer identifiziert solche Dienste, deren ausführbare Dateien oder Konfigurationsdateien modifizierbar sind.
+
+- **Ausführung**:
+  - Der Angreifer ersetzt die ausführbare Datei des Dienstes oder eine Konfigurationsdatei mit einer modifizierten Version:
+    - **Ersetzte Datei**: Der Angreifer schreibt eine neue Datei oder überschreibt die bestehende Datei mit bösartigem Code, der beim Start des Dienstes ausgeführt wird.
+    - **Konfigurationsmanipulation**: Statt die ausführbare Datei zu ersetzen, könnte der Angreifer auch eine Konfigurationsdatei ändern, die dem Dienst sagt, eine andere Datei auszuführen.
+
+  - Sobald der Dienst neu gestartet wird oder das System neu gestartet wird, wird die modifizierte Datei ausgeführt, oft mit den Rechten des Dienstes, was zu einer **privilegierten Shell** oder anderen Administratorrechten führen kann.
+
+### **Tools zur Identifikation und Ausnutzung**:
+
+- **WinPEAS** und andere Skripte (z.B. **PowerUp**, **BeRoot**) werden verwendet, um das System zu durchforsten und nach Schwachstellen wie unquoted Service Paths oder modifizierbaren Dienstdateien zu suchen. Diese Tools automatisieren den Prozess der Identifikation und geben detaillierte Auskunft über mögliche Angriffspunkte.
 
 ```shell
 . .\PowerUp.ps1
@@ -384,11 +413,47 @@ Invoke-ServiceAbuse -Name 'SNMPTTRAP' -UserName 'dcorp\student454'
 ```
 
 ## 2. Netzwerkaufklärung (Enumeration)
-Nach der lokalen Privilegieneskalation erfolgt die Netzwerkaufklärung. Ein allgemeiner Scan, z.B. mit **nmap**, dient dazu, vorhandene Dienste und Geräte im Netzwerk zu identifizieren. Weitere Informationen über das Active Directory, wie z.B. den Domänencontroller, Child Domains oder andere Dienste, können ebenfalls gesammelt werden.
 
-Zusätzlich kann eine **Interaktion über SMB** erfolgen. Da Active Directory oft mit SMB arbeitet, können hier Informationen über Geräte und Domänen gesammelt werden. Mit **enum4linux** lassen sich neben Benutzerlisten auch Gruppen und Passwortrichtlinien ermitteln.
+Die Netzwerkaufklärung oder -enumeration ist ein kritischer Schritt nach der lokalen Privilegieneskalation und dient dazu, den Angriffshorizont zu erweitern, indem möglichst viele Informationen über das Netzwerk, dessen Struktur und die verfügbaren Ressourcen gesammelt werden.
 
-Falls anonyme Abfragen nicht möglich sind, kann **Brute-Forcing** verwendet werden, um valide Benutzernamen zu identifizieren. Oftmals ermöglichen schlecht konfigurierte Shares eine anonyme Auflistung von Dateien, die sensible Informationen enthalten können.
+### **Nmap Scans**:
+
+- **Zweck**: 
+  - Nmap wird verwendet, um Netzwerke nach offenen Ports, laufenden Diensten und deren Versionen zu scannen. Dies gibt dem Angreifer einen Überblick über potenzielle Angriffsziele.
+
+- **Ergebnisse**:
+  - Offenlegung von Betriebssystemen, Diensten, und deren Versionen.
+  - Identifizierung von Domänencontrollern, DNS-Servern, und anderen wichtigen Netzwerkdiensten.
+
+### **Interaktion über SMB (Server Message Block)**:
+
+- **Zweck**:
+  - SMB wird von Active Directory (AD) intensiv genutzt, um Dateifreigaben und Authentifizierungsdienste zu handhaben. Durch SMB können Informationen über Benutzer, Gruppen und Domänen direkt vom AD abgefragt werden.
+  
+- **Verfahren**:
+  - SMB-Sessions: Ein Angreifer kann versuchen, eine SMB-Session mit verschiedenen Benutzernamen zu etablieren, um zu sehen, welche gültig sind.
+  - SMB-Share Auflistung: Wenn Freigaben schlecht konfiguriert sind, können sie anonyme Auflistungen von Dateien und Verzeichnissen erlauben.
+
+- **Tools**:
+  - Enum4linux ist ein Perl-Skript, das speziell für Linux entwickelt wurde, um SMB zu scannen und Informationen über AD zu sammeln.
+
+### **Erweiterte Techniken**:
+
+- **Anonyme Abfragen**: 
+  - Viele AD-Domänen sind so konfiguriert, dass sie anonyme Abfragen von bestimmten Informationen zulassen, was der Angreifer ausnutzen kann, um Benutzer, Gruppen, und Passwortrichtlinien zu erfahren.
+
+- **Brute-Forcing für Benutzernamen**:
+  - Falls anonyme Abfragen nicht möglich sind, kann ein Brute-Force-Angriff auf Benutzernamen durchgeführt werden, indem verschiedene Benutzernamen ausprobiert werden, um die existierenden zu identifizieren. Hierbei wird nicht das Passwort erraten, sondern nur die Existenz eines Benutzers bestätigt.
+
+- **SMB-Anonyme Auflistungen**:
+  - Durch das Durchsuchen von öffentlich zugänglichen SMB-Freigaben können Angreifer oft auf Dateien zugreifen, die vertrauliche Informationen wie Passwortlisten, Konfigurationsdateien, oder sogar Backups enthalten.
+
+### **Zusätzliche Schritte**:
+
+- **TCP/IP Stacks Scan**: Ermittlung anderer Netzwerkdienste durch Scannen spezifischer Ports oder durch Ausnutzung von Protokollschwächen.
+- **SNMP Queries**: Wenn SNMP nicht sicher konfiguriert ist, kann es ebenfalls genutzt werden, um Netzwerkgeräte und deren Konfiguration zu enumerieren.
+- **DNS Enumeration**: Durch das Abfragen von DNS können weitere Informationen über die Netzwerktopologie und mögliche Subdomains gewonnen werden.
+
 ```shell
 # NMAP Scan
 nmap -Pn -p- -sC -sV -oA full_scan_goad 192.168.56.10-12,22-23
@@ -399,7 +464,32 @@ enum4linux 192.168.56.11
 ```
 
 ## 3. AS-REP Roasting
-Beim **AS-REP Roasting** wird ein Ticket Granting Ticket (TGT) ohne vorherige Authentifizierung angefordert, was aus Kompatibilitätsgründen von Microsoft ermöglicht wurde. Der verschlüsselte Session Key im TGT kann mit Tools wie **Hashcat** geknackt werden, um das Benutzerpasswort herauszufinden.
+
+**AS-REP Roasting** ist eine Angriffstechnik, die auf einem Feature des Kerberos-Protokolls basiert, das von Microsoft aus Kompatibilitätsgründen implementiert wurde. Diese Methode wird genutzt, um Benutzerpasswörter in einem Active Directory-Umfeld zu kompromittieren.
+
+### Funktionsweise:
+
+1. **Pre-Authentication Bypass**:
+   - In einem Kerberos-Setup wird normalerweise eine **Pre-Authentication** benötigt, bevor ein Ticket Granting Ticket (TGT) erteilt wird. Diese Pre-Authentication stellt sicher, dass der Anforderer tatsächlich der rechtmäßige Benutzer ist.
+   - Manche Benutzerkonten sind jedoch so konfiguriert, dass sie **Pre-Authentication nicht erzwingen**. Dies kann aus Legacy-Gründen oder durch Fehlkonfiguration geschehen.
+
+2. **Anforderung des TGTs**:
+   - Ein Angreifer kann mit Tools wie **Rubeus** oder **Impacket** ein TGT für solche Konten anfordern, ohne die Pre-Authentication durchlaufen zu müssen. Das erzeugt eine `AS-REQ`-Nachricht (Authentication Service Request), gefolgt von der `AS-REP`-Nachricht (Authentication Service Reply), die das verschlüsselte TGT enthält.
+
+3. **Schwache Verschlüsselung ausnutzen**:
+   - Das AS-REP enthält einen verschlüsselten Teil, der den **Session Key** enthält. Dieser ist mit dem Passwort des Benutzers verschlüsselt. 
+   - Da viele Benutzer schwache Passwörter haben oder diese verschlüsselt werden mit älteren und schwächeren Algorithmus wie RC4-HMAC, kann dieser verschlüsselte Session Key für ein Passwort-Cracking verwendet werden.
+
+4. **Passwortknacken**:
+   - Der verschlüsselte Inhalt wird von dem Angreifer extrahiert und mit einem Tool wie **Hashcat** oder **John the Ripper** offline angegriffen. 
+   - Diese Tools versuchen, den Schlüssel zu entschlüsseln, indem sie verschiedene Passwörter ausprobieren, bis das richtige Passwort gefunden wird. Der Erfolg dieses Angriffs hängt von der Passwortstärke ab.
+
+### Vorteile für Angreifer:
+
+- **Keine Netzwerkinteraktion nötig**: Das Knacken erfolgt offline, was den Angreifer weniger auffällig macht.
+- **Hohe Erfolgsrate bei schwachen Passwörtern**: Selbst Passwörter, die etwas komplexer sind, lassen sich oft in akzeptabler Zeit knacken.
+
+
 ```shell
 GetNPUsers.py north.sevenkingdoms.local/ -no-pass -usersfile users.txt
 
@@ -407,7 +497,31 @@ hashcat -m 18200 asrephash /usr/share/wordlists/rockyou.txt
 ```
 
 ## 4. Password Spraying
-**Password Spraying** ist besonders effektiv gegen Active Directory, da normale Benutzerkonten oft schwache Passwörter verwenden. Hierbei wird ein Passwort für alle Benutzer getestet, wodurch die Lockout-Mechanismen umgangen werden. Häufig wird die Kombination **Passwort = Benutzername** verwendet, oder typische Passwörter wie "Sommer25!" oder "Welcome1!".
+
+**Password Spraying** ist eine Angriffstechnik, die speziell darauf abzielt, Active Directory (AD) Umgebungen zu kompromittieren, indem sie die typischen Schwächen in der Passwortpolitik ausnutzt. Diese Methode unterscheidet sich von Brute-Force-Angriffen, da sie nicht ein einzelnes Konto mit vielen Passwörtern, sondern viele Konten mit einem oder wenigen Passwörtern attackiert.
+
+### Wie funktioniert Password Spraying?
+
+1. **Zielsetzung**:
+   - Identifizierung der Benutzerkonten im AD, die zumeist schwache Passwörter haben könnten.
+   - Sammlung von Benutzerinformationen, oft durch Enumeration oder OSINT (Open Source Intelligence).
+
+2. **Angriffsvorgehen**:
+   - Statt viele Passwörter für ein Konto auszuprobieren, wird ein einzelnes Passwort oder eine kleine Liste von Passwörtern gegen eine große Anzahl von Benutzerkonten getestet.
+   - Dabei wird oft die folgende Vorgehensweise gewählt:
+     - **Benutzername als Passwort**: Viele Benutzer setzen ihr Passwort gleich ihrem Benutzernamen.
+     - **Allgemeine Passwörter**: Verwendung von häufig verwendeten Passwörtern wie "Welcome1!", "Passw0rd", "Sommer25!", etc.
+   
+3. **Vermeidung von Sperrungen**:
+   - Die Technik zielt darauf ab, die Account-Lockout-Richtlinien zu umgehen, die bei zu vielen fehlgeschlagenen Anmeldeversuchen ein Konto sperren. 
+   - Durch die gleichzeitige Prüfung eines Passworts bei vielen Benutzern wird die Anzahl der Versuche pro Konto minimiert.
+
+### Warum ist Password Spraying effektiv?
+
+- **Nutzerverhalten**: Viele Benutzer setzen einfache, leicht zu erratende Passwörter.
+- **Standardkonfigurationen**: Voreingestellte Passwörter oder Variationen davon sind oft noch im Einsatz.
+- **Lockout Policy**: Typische Sperrrichtlinien sind auf individuelle Konten ausgerichtet, nicht auf das gesamte System, was das Spraying ermöglicht.
+
 
 ```shell
 nxc smb 192.168.56.11 -u users.txt -p users.txt --no-bruteforce
@@ -416,11 +530,32 @@ sprayhound -U users.txt -d north.sevenkingdoms.local -dc 192.168.56.11 -lu hodor
 ```
 
 ## 5. Bloodhound
-Bei großen Active Directory-Instanzen bietet sich **Bloodhound** an, um die vielen Informationen aus der Enumeration effizient zu verarbeiten. Mit dem Tool **SharpHound** werden Daten gesammelt, die dann in **Bloodhound** importiert und visualisiert werden. So lassen sich Angriffswege im Active Directory identifizieren.
 
-- **Datensammlung durch SharpHound**:
-  - Direkt vom Domänencontroller: Informationen über Gruppen, Trusts und Benutzer werden abgefragt.
-  - Von einzelnen PCs: Hierbei werden Informationen zu lokalen Administrationsrechten und Anmeldungen gesammelt.
+**Bloodhound** ist ein leistungsfähiges Tool, das speziell für die Analyse und Visualisierung von Angriffswegen in großen **Active Directory (AD)** Umgebungen entwickelt wurde. Es nutzt die Komplexität und die reichen Verbindungen innerhalb einer AD-Umgebung aus, um Sicherheitslücken zu identifizieren, die von Angreifern genutzt werden könnten.
+
+### Funktionsweise:
+
+- **Datensammlung mit SharpHound**:
+  - **SharpHound** ist ein .NET-Assembly, das zur Datensammlung in Active Directory dient. Es sammelt eine Vielzahl von Informationen, darunter:
+    - **Von Domänencontrollern**:
+      - Informationen über AD-Objekte wie Benutzer, Gruppen, Computer, Trusts, und GPOs (Group Policy Objects).
+      - Details zu ACLs (Access Control Lists), Delegierungen, und den Verbindungen zwischen diesen Objekten.
+    - **Von einzelnen Workstations/Servern**:
+      - Lokale Admin-Rechte, die Benutzer und Gruppen auf einzelnen Maschinen haben.
+      - Anmeldeinformationen und Sitzungen, die auf diesen Maschinen aktiv sind oder waren.
+
+- **Import und Analyse in Bloodhound**:
+  - Die gesammelten Daten werden in JSON-Dateien exportiert und können anschließend in die Bloodhound-GUI importiert werden.
+  - **Bloodhound** nutzt diese Daten, um ein visuelles Netzwerk der AD-Objekte und deren Beziehungen zu erstellen. Es verwendet Graphdatenbanktechnologien, um die Daten zu verarbeiten und zu analysieren.
+
+### Nutzung von Bloodhound:
+
+- **Identifikation von Angriffswegen**:
+  - Bloodhound hilft, sogenannte "Attack Paths" zu identifizieren, anhand derer ein Angreifer von einem kompromittierten Konto zu einem hochprivilegierten Ziel wie dem Domänenadministrator gelangen könnte.
+  - Es kann Pfade aufzeigen, die über verschiedene AD-Objekte und ihre Eigenschaften gehen, z.B. durch Gruppenmitgliedschaften, SPNs (Service Principal Names), und Kerbero-Vertrauensstellungen.
+
+- **Erkennung von Sicherheitslücken**:
+  - Durch die Analyse der Netzwerkstruktur kann Bloodhound Sicherheitslücken identifizieren, wie beispielsweise übermäßige Berechtigungen, gefährliche Delegierungen oder unsichere Trusts.
 
 ```powershell
 xfreerdp /u:jon.snow /p:iknownothing /d:north /v:192.168.56.22 /cert-ignore
@@ -432,7 +567,29 @@ xfreerdp /u:jon.snow /p:iknownothing /d:north /v:192.168.56.22 /cert-ignore
 ```
 
 ## 6. Kerberoasting
-Verfügt der Angreifer über ein gültiges Benutzerkonto, kann **Kerberoasting** durchgeführt werden. Hierbei wird ein Ticket Granting Service (TGS) angefordert, das mit dem Passwort des Dienstes verschlüsselt ist. Der Angriff erfolgt offline und bleibt oft unbemerkt.
+
+**Kerberoasting** ist eine Angriffstechnik in Active Directory-Umgebungen, bei der ein Angreifer SPNs (Service Principal Names) nutzt, um Dienste Tickets (TGS - Ticket Granting Service Tickets) zu kompromittieren und deren Passwörter zu knacken. 
+
+### Ablauf des Angriffs:
+
+1. **Identifikation von SPNs**:
+   - Ein Angreifer, der bereits Zugang zu einem gültigen Benutzerkonto hat (selbst mit geringen Rechten), kann nach Konten suchen, die mit SPNs registriert sind. Diese Konten repräsentieren Dienste im Netzwerk und bieten Angriffsziele für Kerberoasting.
+
+2. **Anforderung der TGS-Tickets**:
+   - Mit einem Werkzeug wie **PowerView** oder **GetUserSPNs** aus **Mimikatz**, kann der Angreifer für diese Konten **TGS-Tickets** anfordern. Ein TGS-Ticket wird vom Key Distribution Center (KDC) ausgestellt und ist mit dem **Passwort des Servicekontos** verschlüsselt.
+
+3. **Extraction des verschlüsselten Tickets**:
+   - Das erzeugte TGS-Ticket wird dann aus dem Anmeldevorgang extrahiert. Dieses Ticket enthält den verschlüsselten Service-Key, der mit dem Passwort des Dienstes verschlüsselt wurde.
+
+4. **Offline-Knacken des Tickets**:
+   - Die verschlüsselten Tickets werden offline mit Tools wie **John the Ripper** oder **Hashcat** angegriffen, um das Passwort zu entschlüsseln. Da dies offline geschieht, verursacht es keinen zusätzlichen Netzwerkverkehr, was den Angriff subtil macht.
+
+### Warum Kerberoasting effektiv ist:
+
+- **Automatisierung und Skalierbarkeit**: Angreifer können Skripte und Tools verwenden, um den Prozess zu automatisieren und viele SPNs gleichzeitig zu attackieren.
+- **Geringe Sichtbarkeit**: Der Angriff erzeugt wenig Verdacht, da er standardmäßige Kerberos-Operationen nachahmt und das eigentliche Knacken offline erfolgt.
+- **Hohe Wahrscheinlichkeit des Erfolgs**: Viele Servicekonten in AD haben schwache Passwörter oder Passwörter, die selten geändert werden, was die Chancen erhöht, dass der Angreifer Erfolg hat.
+
 
 ```shell
 GetUserSPNs.py -request -dc-ip 192.168.56.11 north.sevenkingdoms.local/brandon.stark:iseedeadpeople -outputfile kerberoasting.hashes
@@ -443,14 +600,66 @@ hashcat -m 13100 --force -a 0 kerberoasting.hashes /usr/share/wordlists/rockyou.
 ```
 
 ## 7. Enumeration von Shares mit Credentials
-Nachdem Zugangsdaten erlangt wurden, sollten **Shares erneut** auf Zugriffsrechte und sensible Dateien untersucht werden, da diese wertvolle Informationen enthalten können.
+
+Die Enumeration von Netzwerkshares, nachdem Zugangsdaten erworben wurden, ist ein wesentlicher Schritt in der Aufklärung und Penetration eines Netzwerks. Mit den neu erworbenen Anmeldeinformationen kann ein Angreifer tiefere Einblicke in die Netzwerkressourcen gewinnen und möglicherweise sensible Informationen beschaffen.
+
+### Vorgehensweise:
+
+1. **Zugangsdaten anwenden**:
+   - **SMB/CIFS Shares**: Wenn ein Angreifer Zugangsdaten für ein Domain-Konto oder ein lokales Konto hat, kann er diese nutzen, um sich mit SMB-Freigaben zu verbinden. Dies erfolgt häufig mit Tools wie **smbclient** (auf Unix/Linux) oder **net use** (auf Windows).
+
+   - **Beispiel auf Linux mit smbclient**:
+     - `smbclient //server/share -U username`
+   
+   - **Beispiel auf Windows mit net use**:
+     - `net use \\server\share password /user:username`
+
+2. **Zugriffsrechte prüfen**:
+   - Nach erfolgreicher Authentifizierung wird die Freigabe aufgelistet, um die **Zugriffsrechte** zu überprüfen. Dies ist wichtig, um festzustellen, ob es möglich ist, Dateien zu lesen, zu schreiben, oder auszuführen.
+
+   - Mit **smbmap** können detaillierte Zugriffsrechte und Inhalte von Shares gescannt werden:
+     - `smbmap -u username -p password -H server_ip`
+
+3. **Sensible Dateien suchen**:
+   - Die Freigaben werden durchsucht nach Dateien, die vertrauliche Informationen enthalten könnten. Hierzu gehören:
+     - Konfigurationsdateien (z.B. `web.config`, `appsettings.json`)
+     - Datenbankdateien oder Backups
+     - Anmeldeinformationen in Skripten oder Konfigurationsdateien
+     - Personal- oder Finanzdaten
+
+   - **Rekursive Suche nach bestimmten Dateitypen**:
+     - `smbclient //server/share -U username -c 'recurse; ls *.config'`
+
+4. **Persistenz und Privilegieneskalation**:
+   - Wenn ein Share Schreibzugriff erlaubt, könnte der Angreifer Dateien hochladen, die zum Beispiel beim Start des Servers ausgeführt werden (wie Scheduled Tasks oder Start-Skripte), um Persistenz zu erlangen oder sich weitere Privilegien zu verschaffen.
 
 ```shell
 nxc smb 192.168.56.10-23 -u jon.snow -p iknownothing -d north.sevenkingdoms.local --shares
 ```
 
 ## 8. Broadcast Poisoning
-**Broadcast Poisoning** nutzt aus, dass Windows-Geräte verschiedene Broadcasts senden, z.B. zur Namensauflösung über den **NetBIOS Name Service (NBT-NS)**. Der Angreifer kann diese Broadcasts abfangen und mit gefälschten Antworten reagieren, um **NTLM-Anmeldeinformationen** zu erlangen.
+**Broadcast Poisoning** ist eine Technik, die sich auf die Netzwerkprotokolle stützt, die von Windows-Betriebssystemen verwendet werden, insbesondere auf die **Namensauflösung durch Broadcasts**, wie sie von **NetBIOS Name Service (NBT-NS)** und **Link-Local Multicast Name Resolution (LLMNR)** bereitgestellt wird. Diese Protokolle wurden eingeführt, um die Namensauflösung in lokalen Netzwerken zu vereinfachen, insbesondere wenn der Domain Name System (DNS) Server nicht verfügbar ist oder keine Antwort liefern kann.
+
+### Wie funktioniert Broadcast Poisoning?
+
+1. **Namensauflösung durch Broadcast**: 
+   - Windows-Geräte, die keine Antwort von einem DNS-Server erhalten, senden Broadcast-Anfragen, um den Namen eines Netzwerkgeräts aufzulösen. Das geschieht durch NBT-NS oder LLMNR, wobei letzteres auf UDP-Port 5355 läuft und NBT-NS auf UDP-Port 137.
+
+2. **Abfang und Fälschung**:
+   - Ein Angreifer, der sich im selben Netzwerksegment befindet, kann diese Broadcasts abhören.
+   - Mit Tools wie **Responder** kann der Angreifer auf diese Broadcast-Anfragen mit gefälschten Antworten reagieren. Er gibt vor, die gewünschte Ressource zu sein, und leitet den Clientverkehr zu sich selbst um.
+
+3. **Erlangen von Anmeldeinformationen**:
+   - Wenn der Client auf die gefälschte Antwort reagiert und versucht, sich mit der vermeintlichen Ressource zu verbinden, wird er gefordert, sich zu authentifizieren. 
+   - Da standardmäßig NTLM verwendet wird, sendet der Client seine **NTLM-Anmeldeinformationen** (oft in Form von NTLMv2-Hashes) an den Angreifer.
+   - Diese Hashes können von Angreifern entweder direkt in "Pass-the-Hash"-Angriffen genutzt werden oder offline mit Tools wie **hashcat** oder **John the Ripper** geknackt werden, um das Klartextpasswort zu erlangen.
+
+### Sicherheitsauswirkungen:
+
+- **Man-in-the-Middle-Angriffe**: Der Angreifer kann sich authentifizieren und Netzwerkdienste als legitimer Benutzer nutzen.
+- **Lateral Movement**: Wenn ein Angreifer die Anmeldedaten eines privilegierten Benutzers erhält, kann er sich horizontal im Netzwerk bewegen und weitere Systeme kompromittieren.
+- **Passwortknacken**: Mit den abgefangenen Hashes können Angreifer versuchen, durch Brute-Force-Angriffe die eigentlichen Passwörter zu entschlüsseln.
+
 
 ```shell
 responder -I eth0
@@ -459,7 +668,28 @@ hashcat -m 5600 --force -a 0 responder.hashes /usr/share/wordlists/rockyou.txt
 ```
 
 ## 9. NTLM Relaying
-Wenn **SMB Signing** deaktiviert ist, können Anfragen abgefangen und an andere Server weitergeleitet werden. Der Angreifer agiert als Vermittler und baut im Namen des Clients eine Session auf.
+
+**NTLM Relaying** ist eine Angriffsmethode, die ausgenutzt wird, wenn **SMB Signing** nicht aktiviert ist. Hierbei handelt es sich um eine Variante des Man-in-the-Middle-Angriffs, bei dem der Angreifer Netzwerkverkehr zwischen zwei Parteien abfängt und manipuliert.
+
+### Funktionsweise:
+
+1. **Abfangen von Authentifizierungsanfragen**:
+   - Wenn **SMB Signing** deaktiviert ist, kann der Angreifer ungesicherten SMB-Verkehr abhören. SMB (Server Message Block) ist ein Protokoll, das in Windows-Netzwerken weit verbreitet ist, um Dateien, Drucker und andere Ressourcen zu teilen.
+   - Tools wie **Responder** werden verwendet, um auf Netzwerk-Anfragen zu antworten und die Anmeldeinformationen des Clients zu erfassen.
+
+2. **Weiterleiten und Authentifizieren**:
+   - Der Angreifer nimmt die NTLM-Authentifizierungsanfrage des Clients auf und sendet diese weiter an einen anderen Server, auf den er Zugriff haben möchte.
+   - Dabei agiert der Angreifer als **Proxy**, der die Authentifizierung im Namen des Clients durchführt. 
+
+3. **Sessionaufbau**:
+   - Sobald der Zielserver die Anfrage akzeptiert, wird eine Authentifizierungssession zwischen dem Angreifer und dem Server aufgebaut. 
+   - Der Angreifer nutzt die Glaubwürdigkeit und die Rechte des ursprünglichen Clients, um auf den Server zuzugreifen, ohne selbst die Zugangsdaten zu kennen.
+
+### Auswirkungen:
+
+- **Erhöhte Privilegien**: Der Angreifer kann mit den Rechten des kompromittierten Kontos agieren, was in vielen Fällen Administratorrechte einschließt.
+- **Netzwerkinfiltration**: Solche Angriffe ermöglichen es dem Angreifer, sich durch das Netzwerk zu bewegen und weitere Systeme zu kompromittieren.
+
 
 ```shell
 cme smb 192.168.56.10-23 --gen-relay-list relay.txt
@@ -472,23 +702,102 @@ responder -I eth0
 ```
 
 ## 10. Credential Dumping
-Mit **Credential Dumping** werden Keys und Tickets, die auf einem PC gespeichert sind, extrahiert. Tools wie **Mimikatz** oder **LaZagne** können dazu verwendet werden. Auch ohne lokale Administratorrechte können gespeicherte Passwörter, z.B. aus **Chrome**, mit Tools wie **DonPapi** extrahiert werden.
 
-Credential Dumping kann mit **NTLM Relaying** kombiniert werden, um automatisiert Credentials von verschiedenen Systemen zu erhalten, was zu einem Totalausfall des Active Directory führen kann.
+**Credential Dumping** ist eine Technik, bei der Anmeldeinformationen wie Passwörter, Hashwerte, Kerberos-Tickets und andere Authentifizierungstoken von einem System extrahiert werden. Diese Informationen sind oft im Speicher oder in Dateien gespeichert, die von verschiedenen Diensten, Browsern und Anwendungen verwendet werden.
+
+### Methoden und Tools:
+
+1. **Mimikatz**:
+   - **Mimikatz** ist ein weit verbreitetes Tool für Credential Dumping. Es kann:
+     - **LSASS Prozess** auslesen, um gespeicherte Passwörter und Hashes zu extrahieren.
+     - **Kerberos Tickets** abfangen und ausnutzen.
+     - **KIWI-Bibliothek** verwenden, um die gesamte Authentifizierungspipeline zu manipulieren.
+
+   - Beispielkommandos:
+     - `sekurlsa::logonpasswords` - Extrahiert Passwörter und Hashes von aktiven Logon-Sessions.
+     - `sekurlsa::tickets` - Zeigt Kerberos-Tickets an.
+
+2. **LaZagne**:
+   - **LaZagne** ist ein Tool, das auf vielen Betriebssystemen funktioniert, um Passwörter aus verschiedenen Anwendungen und Diensten zu extrahieren, wie z.B.:
+     - Browser: Chrome, Firefox
+     - E-Mail Clients: Outlook, Thunderbird
+     - System: Windows Credentials Manager
+
+3. **DonPapi**:
+   - **DonPapi** ist nützlich, um Credentials aus dem **Memory Protection API (DPAPI)** zu extrahieren:
+     - Kann Passwörter aus Browsern wie Chrome extrahieren, selbst ohne lokale Administratorrechte.
+
+### Kombination mit NTLM Relaying:
+
+- **NTLM Relaying** kann in Verbindung mit Credential Dumping verwendet werden, um das Netzwerk weiter zu kompromittieren:
+  - Nachdem Credentials durch Dumping erlangt wurden, können sie für NTLM Relaying genutzt werden, um sich bei anderen Systemen zu authentifizieren, ohne die tatsächlichen Passwörter zu kennen.
+  - Dies ermöglicht dem Angreifer, sich über das Netzwerk zu bewegen und weitere Informationen zu sammeln oder Schadsoftware zu verteilen.
+
+### Sicherheitsauswirkungen:
+
+- **Kompromittierung von Accounts**: Mit den extrahierten Credentials kann der Angreifer Zugang zu verschiedenen Konten und Systemen erhalten.
+- **Lateral Movement**: Der Angreifer kann sich im Netzwerk bewegen, indem er die geklauten Anmeldeinformationen verwendet, um auf andere Systeme zuzugreifen.
+- **Persistenz**: Durch das Speichern oder Weiterleiten der gestohlenen Anmeldedaten kann ein Angreifer einen dauerhaften Zugang zum Netzwerk aufrechterhalten.
+- **Totalausfall von Active Directory**: Wenn ein Angreifer genug Credentials sammelt, besonders von Administrator-Konten, könnte er das gesamte AD-Setup beeinträchtigen oder übernehmen.
 
 ```shell
 python3 secretsdump.py NORTH/jeor.mormont:'_L0ngCl@w_'@192.168.56.22 
 
 lsassy -d north.sevenkingdoms.local -u jeor.mormont -p _L0ngCl@w_ 192.168.56.22 -m dumpertdll -O dumpertdll_path=/workspace/Outflank-Dumpert-DLL.dll
 ```
+
 ## 11. DC Sync
-**DC Sync** ist eine Technik, bei der ein Angreifer die Funktionalität der Active Directory-Replikation ausnutzt, um Anmeldeinformationen direkt von einem Domain Controller zu extrahieren. Ein Angreifer, der über ausreichende Rechte (z.B. replizierende Directory-Änderungen) verfügt, kann die Datenbank des Domain Controllers nachbilden, einschließlich aller Passwort-Hashes. Tools wie **Mimikatz** ermöglichen es, diese Informationen abzufragen und somit Zugang zu hochprivilegierten Accounts, einschließlich des Domain Admins, zu erhalten. Dies macht DC Sync zu einem äußerst gefährlichen Angriff, der das gesamte Netzwerk kompromittieren kann.
+
+**DC Sync** (Domain Controller Synchronization) nutzt die Replikationsfunktion von Active Directory (AD) aus, um Anmeldeinformationen von einem Domain Controller (DC) zu stehlen. Diese Technik ist besonders gefährlich, da sie in der Lage ist, den gesamten Satz von Benutzeranmeldeinformationen, einschließlich Passwort-Hashes, zu kompromittieren.
+
+### Funktionsweise:
+
+1. **Benötigte Rechte**:
+   - Ein Angreifer benötigt spezielle Rechte wie:
+     - **"Replicating Directory Changes"**
+     - **"Replicating Directory Changes All"**
+   - Diese Rechte erlauben es, Replikationsänderungen anzufordern, was normalerweise nur von anderen DCs oder Diensten genutzt wird, die berechtigt sind, AD-Replikation durchzuführen.
+
+2. **Verwendung von Mimikatz**:
+   - **Mimikatz** kann mit dem Modul `lsadump::dcsync` verwendet werden, um die Replikationsfunktion zu missbrauchen. Der Angreifer gibt an, welche Benutzerdaten er von welchem DC extrahieren möchte:
+
+     ```shell
+     lsadump::dcsync /domain:yourdomain.local /user:Administrator
+     ```
+
+   - Dieser Befehl simuliert eine Replikationsanforderung und der DC sendet die Daten zurück, die Mimikatz dann entschlüsselt und anzeigt.
+
+3. **Extrahieren der Informationen**:
+   - Die extrahierten Daten umfassen:
+     - **NTLM-Hashes**: Diese können für Pass-the-Hash-Angriffe verwendet werden.
+     - **Kerberos Tickets**: Wenn der Angreifer die Rechte hat, kann er auch Tickets extrahieren.
+
+
 ```shell
 secretsdump -just-dc-ntlm essos.local/Username:Password@meereen.essos.local
 ```
 
 ## 12. Golden Ticket Angriff
-Ein **Golden Ticket Angriff** nutzt eine Schwachstelle in der Kerberos-Authentifizierung aus. Angreifer, die Zugriff auf den **KRBTGT**-Account im Active Directory erlangt haben, können **Golden Tickets** erstellen, die uneingeschränkten Zugriff auf alle Ressourcen der Domäne ermöglichen. Der **KRBTGT**-Account ist der Account, den der Key Distribution Center (KDC) verwendet, um TGTs zu verschlüsseln. Da der Angreifer in der Lage ist, eigene Tickets zu erstellen, kann er beliebige Rechte und sogar Administratorzugriff auf das gesamte Netzwerk erhalten. Solche Tickets sind schwer zu erkennen und ermöglichen es dem Angreifer, langfristig im Netzwerk präsent zu bleiben.
+
+Der **Golden Ticket Angriff** zielt auf eine kritische Komponente des Kerberos-Authentifizierungsprotokolls in Active Directory Umgebungen ab. Hierbei wird die Schlüsselverteilung und -verschlüsselung des Ticket Granting Service (TGS) und Ticket Granting Ticket (TGT) kompromittiert.
+
+### Funktionsweise:
+
+1. **Zugriff auf den KRBTGT-Account**:
+   - **KRBTGT** ist der Master-Account in AD, der für die Verschlüsselung von TGTs verantwortlich ist. Wenn ein Angreifer Zugriff auf den Schlüssel dieses Accounts erlangt, kann er das Authentifizierungssystem unterwandern.
+   - Der Angreifer benötigt hierfür:
+     - Den NTLM-Hash des KRBTGT-Accounts oder
+     - Die Kerberos-Ticket-Enschlüsselungsschüssel (AES-Schlüssel oder RC4-Schlüssel).
+
+2. **Erstellung eines Golden Tickets**:
+   - Mit den erlangten Schlüsseln kann der Angreifer ein **Golden Ticket** erstellen, das ein TGT ist, welches von keinem Domain Controller jemals als ungültig erklärt wird:
+     - **Lebensdauer**: Es kann eine maximale Lebensdauer haben, oft Jahre, was die Erkennung erschwert.
+     - **Rechte**: Der Angreifer kann Admin-Rechte oder jede andere Berechtigung einbauen, die er benötigt.
+
+3. **Verwendung des Golden Tickets**:
+   - Das erstellte Ticket wird verwendet, um sich bei AD-Diensten zu authentifizieren, ohne dass der Angreifer das tatsächliche Passwort des Accounts kennt.
+   - Der Angreifer kann sich also als jeder Benutzer ausgeben und sogar den Domain Administrator ersetzen, um überall im Netzwerk Zugang zu erhalten.
+
 ```shell
 kerberos::golden /domain:inlanefreight.local /user:Administrator /sid:S-1-5-21-2974783224-3764228556-2640795941 /rc4:810d754e118439bab1e1d13216150299 /ptt
 
