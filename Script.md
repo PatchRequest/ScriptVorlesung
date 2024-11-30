@@ -489,7 +489,7 @@ enum4linux 192.168.56.11
 - **Keine Netzwerkinteraktion nötig**: Das Knacken erfolgt offline, was den Angreifer weniger auffällig macht.
 - **Hohe Erfolgsrate bei schwachen Passwörtern**: Selbst Passwörter, die etwas komplexer sind, lassen sich oft in akzeptabler Zeit knacken.
 
-
+![image](https://blog.netwrix.com/wp-content/uploads/2022/11/AS-REP-Roasting-2.png)
 ```shell
 GetNPUsers.py north.sevenkingdoms.local/ -no-pass -usersfile users.txt
 
@@ -521,7 +521,7 @@ hashcat -m 18200 asrephash /usr/share/wordlists/rockyou.txt
 - **Nutzerverhalten**: Viele Benutzer setzen einfache, leicht zu erratende Passwörter.
 - **Standardkonfigurationen**: Voreingestellte Passwörter oder Variationen davon sind oft noch im Einsatz.
 - **Lockout Policy**: Typische Sperrrichtlinien sind auf individuelle Konten ausgerichtet, nicht auf das gesamte System, was das Spraying ermöglicht.
-
+![image](https://www.ravenswoodtechnology.com/wp-content/uploads/2021/09/1-4-1024x588.jpg)
 
 ```shell
 nxc smb 192.168.56.11 -u users.txt -p users.txt --no-bruteforce
@@ -556,6 +556,8 @@ sprayhound -U users.txt -d north.sevenkingdoms.local -dc 192.168.56.11 -lu hodor
 
 - **Erkennung von Sicherheitslücken**:
   - Durch die Analyse der Netzwerkstruktur kann Bloodhound Sicherheitslücken identifizieren, wie beispielsweise übermäßige Berechtigungen, gefährliche Delegierungen oder unsichere Trusts.
+
+![image](https://pbs.twimg.com/media/GdkwxNHWgAEN8cL?format=jpg&name=large)
 
 ```powershell
 xfreerdp /u:jon.snow /p:iknownothing /d:north /v:192.168.56.22 /cert-ignore
@@ -659,7 +661,7 @@ nxc smb 192.168.56.10-23 -u jon.snow -p iknownothing -d north.sevenkingdoms.loca
 - **Man-in-the-Middle-Angriffe**: Der Angreifer kann sich authentifizieren und Netzwerkdienste als legitimer Benutzer nutzen.
 - **Lateral Movement**: Wenn ein Angreifer die Anmeldedaten eines privilegierten Benutzers erhält, kann er sich horizontal im Netzwerk bewegen und weitere Systeme kompromittieren.
 - **Passwortknacken**: Mit den abgefangenen Hashes können Angreifer versuchen, durch Brute-Force-Angriffe die eigentlichen Passwörter zu entschlüsseln.
-
+![image](https://www.sternsecurity.com/wp-content/uploads/2020/11/llmnr_poison1.jpg)
 
 ```shell
 responder -I eth0
@@ -690,7 +692,7 @@ hashcat -m 5600 --force -a 0 responder.hashes /usr/share/wordlists/rockyou.txt
 - **Erhöhte Privilegien**: Der Angreifer kann mit den Rechten des kompromittierten Kontos agieren, was in vielen Fällen Administratorrechte einschließt.
 - **Netzwerkinfiltration**: Solche Angriffe ermöglichen es dem Angreifer, sich durch das Netzwerk zu bewegen und weitere Systeme zu kompromittieren.
 
-
+![image](https://blog.compass-security.com/wp-content/uploads/2023/06/image-8.png)
 ```shell
 cme smb 192.168.56.10-23 --gen-relay-list relay.txt
 
