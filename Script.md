@@ -1,5 +1,5 @@
-# 1. Rahmenbedingungen
-## 1.1 Relevante Paragraphen und rechtliche Grundlagen
+# Rahmenbedingungen
+## Relevante Paragraphen und rechtliche Grundlagen
 ### §202a: Ausspähen von Daten (Absätze 1 und 2)
 
 > (1) Wer unbefugt sich oder einem anderen Zugang zu Daten, die nicht für ihn bestimmt und die gegen unberechtigten Zugang besonders gesichert sind, unter Überwindung der Zugangssicherung verschafft, wird mit Freiheitsstrafe bis zu drei Jahren oder mit Geldstrafe bestraft.
@@ -139,7 +139,164 @@ Tools wie **Notion** und **Obsidian** eignen sich hervorragend zur Erstellung un
 Weitere Tools wie **Joplin**, **Zettlr** oder auch **Standard Notes** bieten ebenfalls Optionen zur flexiblen und sicheren Dokumentation von Wissen, je nach individuellen Anforderungen. Jedes dieser Tools hat seine Stärken, ob es um die Zusammenarbeit im Team, die Offline-Funktionalität oder die Verschlüsselung der Daten geht. Die Wahl des passenden Tools hängt dabei von persönlichen Vorlieben und Anforderungen an die Sicherheit ab.
 
 
-# 2. OSINT
+
+# Security Boundaries and Threat Modeling
+
+Bevor wir uns mit dem Thema Sicherheit im Detail beschäftigen, ist eine entscheidende Frage zu klären: **Vor wem oder was müssen wir uns schützen?** Die Antwort darauf ist komplex und hängt von zahlreichen Faktoren ab, wie der Architektur eines Systems, den eingesetzten Technologien, und vor allem den potenziellen Angreifern, die Sicherheitslücken ausnutzen könnten.
+
+---
+
+## Was sind Security Boundaries?
+Security Boundaries definieren die Grenzen eines Systems, innerhalb derer Vertrauen angenommen wird. Diese Grenzen trennen vertrauenswürdige Komponenten von unzuverlässigen oder potenziell schädlichen Komponenten. Security Boundaries sind essenziell, da sie festlegen, wo Sicherheitskontrollen greifen müssen, um unberechtigte Zugriffe, Datenlecks oder Manipulationen zu verhindern.
+
+### Typische Beispiele für Security Boundaries:
+
+- **Zwischen Benutzer und System:** Benutzer sollten keine Berechtigungen haben, die sie nicht benötigen.
+- **Zwischen Prozessen:** Anwendungen sollten strikt voneinander isoliert sein, damit ein kompromittierter Prozess keinen Schaden in anderen verursachen kann.
+- **Zwischen Netzwerkzonen:** Interne und externe Netzwerke sollten klar voneinander abgegrenzt und überwacht werden.
+- **Zwischen privilegierten und unprivilegierten Konten:** Ein Administrator hat oft weitreichende Rechte – was passiert, wenn dieses Konto kompromittiert wird? Auch hier ist eine Sicherheitsgrenze notwendig.
+
+---
+
+## Wer sind die potenziellen Angreifer?
+Um effektive Sicherheitsmaßnahmen zu implementieren, ist es entscheidend zu verstehen, wer die Angreifer sind und wie sie operieren. Dabei können folgende Kategorien unterschieden werden:
+
+### **Externe Angreifer**
+Personen oder Organisationen außerhalb des Systems, wie Hacker, Cyberkriminelle oder staatlich geförderte Gruppen (APTs - Advanced Persistent Threats).
+- **Beispiel:** Ein externer Angreifer, der eine Sicherheitslücke in einer Webapplikation ausnutzt, um Zugriff auf sensible Daten zu erlangen.
+
+### **Interne Angreifer**
+Insider, wie Mitarbeiter oder Dienstleister, die aufgrund ihrer Position Zugang zu sensiblen Ressourcen haben.
+- **Beispiel:** Ein verärgerter Mitarbeiter, der absichtlich Daten manipuliert oder stiehlt.
+
+### **Fehlkonfigurierte oder kompromittierte Systeme**
+Systeme, die entweder durch falsche Konfiguration oder durch Malware zu einem Angreifer werden können.
+- **Beispiel:** Ein Server mit einer offenen Admin-Schnittstelle oder ein mit Schadsoftware infizierter Laptop.
+
+### **Privilegierte Angreifer**
+Auch Administratoren oder IT-Mitarbeiter könnten potenziell ein Risiko darstellen. Obwohl diese Personen in der Regel vertrauenswürdig sind, sollte das System auch sie berücksichtigen, falls deren Zugang kompromittiert wird.
+- **Beispiel:** Ein gestohlenes Admin-Konto könnte für massiven Schaden genutzt werden.
+
+---
+
+## Threat Modeling – Wie identifizieren wir Risiken?
+Um effektive Schutzmaßnahmen zu entwickeln, ist Threat Modeling ein bewährter Ansatz. Hierbei handelt es sich um einen strukturierten Prozess, um Bedrohungen zu analysieren und Sicherheitsmaßnahmen gezielt zu planen. Der Prozess lässt sich in vier wesentliche Schritte unterteilen:
+
+### **1. Verständnis des Systems**
+Zeichne ein vollständiges Bild des Systems, einschließlich seiner Architektur, Komponenten und Datenflüsse. Diese Übersicht hilft dabei, kritische Punkte zu identifizieren.
+- **Werkzeuge:** Datenflussdiagramme (DFDs) oder Tools wie Microsoft Threat Modeling Tool.
+
+### **2. Identifikation von Security Boundaries**
+Bestimme, wo Sicherheitsgrenzen existieren und ob sie ausreichend geschützt sind.
+- **Beispiel:** Der Übergang von einem User zu einem Admin-Konto.
+
+### **3. Bewertung der Bedrohungen**
+Analysiere potenzielle Angriffe. Ein klassisches Framework hierfür ist **STRIDE**:
+
+- **Spoofing** (Identitätsfälschung)
+- **Tampering** (Manipulation von Daten)
+- **Repudiation** (Abstreitbarkeit von Aktionen)
+- **Information Disclosure** (Datenlecks)
+- **Denial of Service** (Verweigerung des Dienstes)
+- **Elevation of Privilege** (Rechteausweitung)
+
+### **4. Maßnahmenplanung**
+Entwickle spezifische Gegenmaßnahmen, wie Firewalls, Zugriffskontrollen oder Verschlüsselung, basierend auf den identifizierten Bedrohungen.
+
+---
+
+## Sollten wir das System vor Administratoren schützen?
+Eine besonders heikle Frage in der Sicherheitsplanung ist die Rolle des Administrators. Administratoren haben in der Regel weitreichende Berechtigungen und sind daher nicht nur eine zentrale Sicherheitsressource, sondern auch ein potenzieller Angriffsvektor. Dies wird insbesondere problematisch, wenn:
+
+- Admin-Konten kompromittiert werden.
+- Ein Administrator absichtlich oder unbeabsichtigt Schaden anrichtet.
+
+Die Antwort lautet also: **Ja**, auch Administratoren sollten innerhalb des Systems Sicherheitsgrenzen haben. Beispiele hierfür sind:
+
+- **Privileged Access Management (PAM):** Begrenzung des Zugangs zu sensiblen Ressourcen nur auf einen minimalen Zeitraum.
+- **Audit-Logs:** Protokollierung aller administrativen Aktionen.
+- **Least Privilege Principle:** Selbst Administratoren sollten nur die minimalen Rechte haben, die sie für ihre Aufgaben benötigen.
+
+Video dazu:
+https://www.youtube.com/watch?v=LxUAnZY_08o
+
+
+# Kapitel: Grundlegende Begriffe der Offensive Security
+
+In diesem Kapitel werden grundlegende Begriffe und Konzepte der Offensive Security hergeleitet und erklärt. Diese Terminologie ist essenziell, um ein tieferes Verständnis der Disziplin zu entwickeln und ihre Techniken sowie Ziele klar voneinander abzugrenzen.
+
+## Vulnerability (Schwachstelle)
+Eine **Vulnerability** bezeichnet eine Schwachstelle in einem System, Netzwerk, einer Anwendung oder einem Protokoll, die ein potenzieller Angreifer ausnutzen kann. Schwachstellen entstehen häufig durch:
+
+- Fehler im Design oder in der Implementierung von Software.
+- Unsichere Konfigurationen von Systemen.
+- Fehlende oder unzureichende Sicherheitsmaßnahmen.
+
+### Beispiel
+Ein häufiges Beispiel ist eine **SQL-Injection-Schwachstelle**, die durch unsichere Datenbankabfragen entsteht und es einem Angreifer ermöglicht, unautorisierte Datenbankbefehle auszuführen.
+
+## Exploit
+Ein **Exploit** ist ein Werkzeug oder eine Methode, die eine Schwachstelle ausnutzt, um ein bestimmtes Ziel zu erreichen. Exploits können manuell erstellt werden oder als automatisierte Skripte und Tools vorliegen.
+
+### Arten von Exploits
+- **Remote Exploit**: Nutzt eine Schwachstelle aus der Ferne aus, z. B. über das Netzwerk.
+- **Local Exploit**: Erfordert physischen Zugriff oder privilegierte Rechte auf dem Zielsystem.
+- **Zero-Day-Exploit**: Nutzt Schwachstellen aus, die bisher nicht bekannt oder ungepatcht sind.
+
+### Beispiel
+Ein Exploit für eine **Buffer Overflow**-Schwachstelle könnte es einem Angreifer ermöglichen, schädlichen Code mit Administratorrechten auf einem Zielsystem auszuführen.
+
+## Hack
+Der Begriff **Hack** ist vielschichtig und hängt stark vom Kontext ab. Allgemein bezeichnet ein Hack eine clevere oder kreative Lösung, die oft außerhalb der üblichen Regeln liegt. Im Bereich der Offensive Security wird ein Hack häufig als Angriff auf ein System verstanden, bei dem Schwachstellen ausgenutzt werden, um Zugriff zu erhalten oder Schaden anzurichten.
+
+### Black Hat vs. White Hat
+- **Black Hat Hacking**: Illegales Hacking mit böswilligen Absichten.
+- **White Hat Hacking**: Legales und autorisiertes Hacking, z. B. im Rahmen eines Penetrationstests.
+
+## Penetration Testing vs. Red Teaming
+
+### Penetration Testing
+**Penetration Testing** (kurz: Pentesting) ist ein gezielter und strukturierter Sicherheitsangriff auf ein System, um Schwachstellen zu identifizieren und zu dokumentieren. Ziel ist es, das Sicherheitsniveau des Systems zu bewerten und Empfehlungen für Verbesserungen zu geben.
+
+#### Eigenschaften:
+- Zeitlich begrenzt.
+- Fokus auf technische Schwachstellen.
+- Ziel: Schwachstellenberichte und technische Handlungsempfehlungen.
+
+### Red Teaming
+**Red Teaming** simuliert eine realistische Angriffskampagne, um nicht nur technische Schwachstellen, sondern auch die Effektivität der Verteidigungsmaßnahmen (Blue Team) zu bewerten. Dabei werden alle möglichen Angriffsvektoren (z. B. Social Engineering, physischer Zugriff) genutzt.
+
+#### Eigenschaften:
+- Umfassender und kreativer Ansatz.
+- Fokus auf Taktiken, Techniken und Prozeduren (TTPs).
+- Ziel: Verbesserung der gesamten Sicherheitsstrategie.
+
+## CVE (Common Vulnerabilities and Exposures)
+Das **CVE-System** ist ein international anerkannter Standard zur Identifikation und Klassifizierung von Schwachstellen. Jede Schwachstelle erhält eine eindeutige **CVE-ID**.
+
+### Aufbau einer CVE-ID
+Eine typische CVE-ID sieht wie folgt aus: `CVE-2024-12345`
+- `2024`: Jahr der Meldung.
+- `12345`: Eindeutige Nummer zur Identifikation der Schwachstelle.
+
+Das CVE-System erleichtert den Austausch von Informationen über Schwachstellen und sorgt für eine einheitliche Terminologie in der Sicherheitsgemeinschaft.
+
+### Beispiel
+`CVE-2021-44228` beschreibt die Schwachstelle in der Java-Bibliothek Log4j, die als Log4Shell bekannt wurde und weltweit kritische Auswirkungen hatte.
+
+## CVSS (Common Vulnerability Scoring System)
+Das **CVSS** ist ein Bewertungssystem, das Schwachstellen auf einer Skala von 0 bis 10 klassifiziert. Es dient dazu, die Schwere einer Schwachstelle einheitlich und nachvollziehbar einzuschätzen.
+
+### Bestandteile
+Ein CVSS-Score basiert auf drei Hauptmetriken:
+1. **Basismetriken**: Beschreiben die grundsätzliche Schwere der Schwachstelle (z. B. Ausnutzbarkeit, Auswirkungen).
+2. **Temporäre Metriken**: Berücksichtigen zeitliche Faktoren wie verfügbare Exploits oder Patches.
+3. **Umgebungsmetriken**: Bewerten den Einfluss der Schwachstelle auf eine spezifische Umgebung.
+
+### Beispiel
+Ein CVSS-Score von `9.8` (kritisch) könnte eine Schwachstelle beschreiben, die ohne Authentifizierung remote ausnutzbar ist und vollständige Kontrolle über ein System ermöglicht.
+
+# OSINT
 
 ### Was ist OSINT?
 
