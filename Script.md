@@ -350,8 +350,6 @@ Verfügbarkeit bedeutet, dass Systeme, Anwendungen und Daten für autorisierte B
 
 ---
 
-
-
 # OSINT
 
 ### Was ist OSINT?
@@ -449,6 +447,103 @@ Mit maschinellem Lernen können Verhaltensmuster erkannt und große Datenmengen 
 Bei der Informationssuche besteht die Gefahr, dass man **falsche Annahmen trifft** und sich in sogenannte "Rabbit Holes" verirrt – eine Reihe falscher Verknüpfungen, die die gesamte Recherche beeinflussen.
 
 Es ist daher wichtig, sich regelmäßig zu hinterfragen und zu überprüfen, ob alle Informationen noch stimmig sind. Das Entwickeln von Mechanismen zur **Qualitätsüberprüfung** der Daten kann helfen, den Fokus auf die wesentlichen und verlässlichen Informationen zu behalten. Systeme zur Klassifizierung von Informationsquellen nach ihrer Vertrauenswürdigkeit sind ebenfalls hilfreich, um eine fundierte Entscheidung zu treffen und die Validität der gesammelten Daten sicherzustellen.
+
+# Fuzzing
+
+## Was ist Fuzzing?
+Fuzzing ist eine automatisierte Testmethode zur Software-Sicherheit, bei der ein Programm, System oder eine Schnittstelle gezielt mit einer großen Anzahl zufällig generierter oder systematisch veränderter Eingabedaten konfrontiert wird. Das Ziel dieser Methode ist es, unerwartete Verhaltensweisen, Fehler oder Sicherheitslücken wie Abstürze, Speicherverletzungen oder sogar ungewollte Codeausführung zu identifizieren. Indem Programme einer großen Anzahl von Tests ausgesetzt werden, die außerhalb der typischen Nutzungsfälle liegen, lassen sich Schwachstellen aufdecken, die in traditionellen Testverfahren oft unbemerkt bleiben. 
+
+Das Konzept des Fuzzings wurde erstmals in den späten 1980er Jahren von Professor Barton Miller an der University of Wisconsin eingeführt. Ursprünglich als Experiment gedacht, um Software auf ihre Robustheit zu testen, entwickelte sich Fuzzing im Laufe der Jahre zu einer der effektivsten Methoden für das Auffinden von Software-Schwachstellen. Durch seine breite Anwendung in der IT-Sicherheit und kontinuierliche Weiterentwicklung hat Fuzzing heute einen festen Platz in der modernen Softwareentwicklung und dem Sicherheitsmanagement.
+
+---
+
+## Wie funktioniert Fuzzing?
+Fuzzing basiert auf der systematischen oder zufälligen Generierung von Eingabedaten und dem anschließenden Testen eines Zielprogramms. Der Prozess lässt sich in mehrere Schritte gliedern, die je nach Komplexität des Fuzzers und des getesteten Systems variieren:
+
+1. **Auswahl des Ziels:** Zunächst wird das zu testende Programm oder System definiert. Dabei kann es sich um Anwendungen, Dateiformate, Netzwerkprotokolle oder APIs handeln. Das gewählte Ziel bestimmt die Art der Eingaben und die Anforderungen an den Fuzzer.
+2. **Eingabegenerierung:** Die Eingabedaten werden vom Fuzzing-Tool erzeugt. Dies kann entweder vollkommen **zufällig (Random Fuzzing)** erfolgen, wobei keinerlei Vorwissen über das Eingabeformat vorliegt, oder **strukturiert (Smart Fuzzing)**, wobei gezielt Regeln und Formatbeschreibungen verwendet werden, um valide, aber mutierte Eingaben zu generieren.
+3. **Testdurchführung:** Die generierten Eingaben werden an das Zielprogramm übergeben. Währenddessen wird das Verhalten des Programms genau überwacht, um Fehler oder unerwartete Zustände zu erkennen.
+4. **Analyse und Ergebnisaufnahme:** Bei einem auffälligen Verhalten, wie z.B. einem Absturz oder einer Speicherverletzung, wird das Ereignis protokolliert. Die fehlerverursachende Eingabe wird zur weiteren Analyse gespeichert.
+5. **Reproduktion und Debugging:** Die fehlerhaften Eingaben werden isoliert und reproduziert, um die Ursache der Schwachstelle zu identifizieren und geeignete Maßnahmen zur Fehlerbehebung einzuleiten.
+
+### Beispiel für einen einfachen Fuzzer (Python)
+Hier ein praktisches Beispiel für einen einfachen, zufälligen Fuzzer, der Eingaben an ein Zielprogramm sendet und Fehler erkennt:
+
+```python
+import os
+import subprocess
+import random
+import string
+
+def generate_input(length=100):
+    # Zufällige Zeichenfolge erzeugen
+    return ''.join(random.choices(string.ascii_letters + string.digits, k=length))
+
+def fuzz(target_program):
+    while True:
+        # Eingabe generieren
+        input_data = generate_input()
+        print(f"Testet mit Eingabe: {input_data}")
+        
+        # Zielprogramm ausführen und Eingabe weiterleiten
+        try:
+            result = subprocess.run([target_program], input=input_data.encode(), timeout=2)
+            if result.returncode != 0:
+                print(f"Fehler gefunden! Eingabe: {input_data}")
+        except subprocess.TimeoutExpired:
+            print("Timeout! Programm reagiert nicht mehr.")
+
+target = "./mein_programm"
+fuzz(target)
+```
+Dieser einfache Python-Fuzzer generiert zufällige Zeichenfolgen und übermittelt sie an ein Programm. Sollten dabei Fehler auftreten, wird die fehlerhafte Eingabe protokolliert.
+
+---
+
+## Arten von Fuzzing
+Fuzzing kann in verschiedene Kategorien unterteilt werden, je nachdem, wie die Eingaben generiert und das System getestet werden:
+
+### 1. **Dumb Fuzzing**
+Dumb Fuzzing, auch als zufälliges Fuzzing bekannt, erzeugt Eingaben ohne jegliches Wissen über das Eingabeformat oder die Struktur der Daten. Die Eingaben werden rein zufällig erstellt und an das Zielprogramm weitergegeben. 
+
+Der Vorteil dieser Methode liegt in ihrer Einfachheit und schnellen Umsetzung. Allerdings kann Dumb Fuzzing ineffizient sein, da viele der generierten Eingaben sofort von der Eingabevalidierung des Programms aussortiert werden. Diese Methode eignet sich daher eher für einfache Testfälle oder als erster Schritt in einem Testprozess.
+
+### 2. **Smart Fuzzing**
+Smart Fuzzing nutzt im Gegensatz zum Dumb Fuzzing gezielte Informationen über die Struktur der Eingabedaten. Dies kann durch Verwendung von Formatbeschreibungen (z.B. für XML-Dateien oder Netzwerkprotokolle) oder bestehenden Eingaben erfolgen, die systematisch mutiert werden. Smart Fuzzing ist deutlich effizienter und kann tieferliegende Fehler im Programmcode identifizieren.
+
+Der Nachteil liegt im höheren Aufwand für die Erstellung und Pflege der notwendigen Testregeln oder Modelle.
+
+### 3. **Mutation-Based Fuzzing**
+Mutation-Based Fuzzing verändert bestehende, gültige Eingaben leicht, um neue Testfälle zu erzeugen. Beispielweise kann ein Bild-Parser mit leicht veränderten, fehlerhaften Bilddateien getestet werden. Diese Methode kombiniert einfache Umsetzung mit hoher Effizienz, da valide Eingaben als Grundlage dienen.
+
+### 4. **Generation-Based Fuzzing**
+Im Gegensatz zum Mutation-Based Fuzzing generiert Generation-Based Fuzzing Eingabedaten komplett neu. Dabei wird ein Modell oder eine Spezifikation des Eingabeformats verwendet, um gültige, aber auch fehlerhafte Eingaben zu erstellen. Diese Methode eignet sich besonders gut für Systeme mit komplexen Eingabeformaten.
+
+---
+
+## Warum ist Fuzzing so erfolgreich?
+Fuzzing hat sich aus mehreren Gründen als besonders effektiv erwiesen, wenn es darum geht, Software-Schwachstellen zu identifizieren:
+
+1. **Automatisierung:** Fuzzing ermöglicht das automatisierte Testen von Tausenden bis Millionen von Eingaben innerhalb kurzer Zeit. Dadurch wird ein großer Bereich des Programmcodes getestet, der bei manuellen Tests oft unberührt bleibt.
+2. **Unvorhersehbarkeit:** Zufällige oder mutierte Eingaben erzeugen oft Situationen, die ein Entwickler nicht vorhergesehen hat, wodurch unentdeckte Fehler zum Vorschein kommen.
+3. **Skalierbarkeit:** Fuzzing kann leicht auf große Software-Systeme oder mehrere Testinstanzen skaliert werden, was die Testabdeckung deutlich erhöht.
+4. **Erkennung von Zero-Day-Schwachstellen:** Viele schwerwiegende Sicherheitslücken, sogenannte Zero-Day-Schwachstellen, wurden mithilfe von Fuzzing entdeckt, die in traditionellen Tests unentdeckt geblieben wären.
+
+### Beispiele erfolgreicher Fuzzing-Tools
+- **AFL (American Fuzzy Lop):** Ein leistungsstarkes, quelloffenes Fuzzing-Tool, das mit Code-Instrumentierung arbeitet und sich für viele Programme eignet.
+- **LibFuzzer:** Ein von LLVM bereitgestelltes Fuzzing-Framework, das direkt in den Programmcode eingebettet wird.
+- **OSS-Fuzz:** Ein von Google entwickelter Cloud-Fuzzing-Dienst, der speziell für Open-Source-Projekte entwickelt wurde und automatisiert kontinuierliche Tests durchführt.
+
+---
+
+## Herausforderungen beim Fuzzing
+Trotz seiner zahlreichen Vorteile ist Fuzzing nicht frei von Herausforderungen:
+
+- **Eingabevalidierung:** Programme mit sehr strengen Eingabevalidierungsmechanismen filtern ungültige Eingaben schnell aus, wodurch die Testeffektivität sinken kann.
+- **Leistungsbedarf:** Fuzzing kann, insbesondere bei Smart Fuzzing oder komplexen Programmen, sehr ressourcen- und zeitintensiv sein.
+- **Fehlerreproduktion:** Die exakte Reproduktion von Fehlern kann schwierig sein, insbesondere bei zufällig generierten Eingaben.
+- **Codeabdeckung:** Es besteht die Gefahr, dass bestimmte Codepfade ungetestet bleiben, insbesondere wenn sie nur unter speziellen Bedingungen erreicht werden.
+
 
 # Active Directory
 
