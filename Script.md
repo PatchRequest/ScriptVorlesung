@@ -1146,8 +1146,38 @@ getTGT.py -hashes ':cba36eccfd9d949c73bc73715364aff5' north.sevenkingdoms.local/
 export KRB5CCNAME=/workspace/tgt/catelyn.stark.ccache
 wmiexec.py -k -no-pass north.sevenkingdoms.local/catelyn.stark@winterfell
 ```
+## Tunneling zur Unterstützung von Lateral Movement
 
+Tunneling ist eine Technik, die in offensiven Sicherheitsoperationen häufig genutzt wird, um Netzwerkverkehr durch verschlüsselte SSH-Verbindungen zu leiten und Zugriff auf isolierte Systeme zu erlangen. Es ermöglicht Angreifern, Verbindungen über mehrere Zwischenstationen zu routen und somit Netzwerksegmente zu überwinden, die sonst nicht direkt zugänglich wären.
 
+Ein gängiges Szenario besteht darin, SSH-Portweiterleitungen (**Port Forwarding**) zu nutzen, um Verbindungen von einem kompromittierten System zu einem Zielsystem aufzubauen. Dabei werden **dynamische**, **lokale** oder **entfernte Port-Weiterleitungen** eingesetzt:
+
+#### Dynamisches Port Forwarding
+- Erstellt einen **SOCKS-Proxy-Server**, über den Netzwerkverkehr durch einen kompromittierten Host geleitet werden kann. 
+- Dadurch lassen sich weitere Hosts im Zielnetzwerk erreichen.
+
+#### Remote Port Forwarding
+- Ermöglicht es, einen Port auf dem Angreifer-Host verfügbar zu machen.
+- Beispielsweise kann ein Command-and-Control-Server (C2) auf den kompromittierten Host zugreifen.
+
+#### Lokales Port Forwarding
+- Dient dazu, **Ports eines Zielsystems durch eine SSH-Verbindung zugänglich** zu machen.
+
+---
+
+### Praktisches Beispiel: Lateral Movement via Tunneling
+
+Ein Beispiel zur Kombination dieser Techniken:
+1. **SOCKS-Proxy erstellen**: Auf einem kompromittierten Host wird ein SOCKS-Proxy mittels dynamischem Port Forwarding eingerichtet.
+2. **Port-Weiterleitung konfigurieren**: Ports werden durch SSH-Tunnel zu einem C2-Server weitergeleitet.
+3. **Netzwerkscans durchführen**: Tools wie `nmap` in Kombination mit `proxychains` werden verwendet, um interne Netzwerksegmente zu scannen.
+4. **Zugriff auf isolierte Systeme**: Identifizierung von Schwachstellen auf weiteren Systemen und Zugriff auf normalerweise nicht erreichbare Client-Netzwerke.
+
+Durch diese schrittweise Vorgehensweise können Angreifer Systeme im Client-Netzwerk erreichen, die sonst von außen nicht zugänglich sind.
+
+![image](https://miro.medium.com/v2/resize:fit:720/format:webp/1*pmxsNCQJ9TgoRA0UQfK9SA.png)
+
+Gute Blog über das Thema: https://posts.specterops.io/offensive-security-guide-to-ssh-tunnels-and-proxies-b525cbd4d4c6
 # Web Pentesting
 
 In diesem Kapitel widmen wir uns der Methodik des Web Pentestings. Zunächst werden die grundlegenden Funktionsprinzipien des modernen Webs erörtert, um ein tiefes Verständnis der Kommunikationsarchitektur zu gewährleisten.
