@@ -296,6 +296,62 @@ Ein CVSS-Score basiert auf drei Hauptmetriken:
 ### Beispiel
 Ein CVSS-Score von `9.8` (kritisch) könnte eine Schwachstelle beschreiben, die ohne Authentifizierung remote ausnutzbar ist und vollständige Kontrolle über ein System ermöglicht.
 
+## CIA-Triad: Die Schutzziele der Informationssicherheit
+
+Die CIA-Triad ist ein grundlegendes Modell in der Informationssicherheit, das drei zentrale Schutzziele definiert: **Confidentiality** (Vertraulichkeit), **Integrity** (Integrität) und **Availability** (Verfügbarkeit). Ein Sicherheitsvorfall oder Angriff liegt vor, wenn mindestens eines dieser Schutzziele verletzt wird. In diesem Kapitel werden die drei Schutzziele der CIA-Triad im Detail erläutert und ihr Bezug zu Angriffen aufgezeigt.
+
+---
+
+### 1. Confidentiality (Vertraulichkeit)
+#### Definition
+Vertraulichkeit bezeichnet die Eigenschaft von Informationen, nur autorisierten Personen oder Systemen zugänglich zu sein. Die unautorisierte Offenlegung sensibler Daten stellt eine Verletzung dieses Schutzziels dar.
+
+#### Beispiele für Angriffe
+- **Eavesdropping (Abhören):** Ein Angreifer nutzt Sniffing-Tools wie *Wireshark*, um unverschlüsselte Netzwerkkommunikation mitzulesen.
+- **Data Exfiltration:** Durch Phishing oder Malware (z.B. Keylogger) werden Zugangsdaten gestohlen, um sensible Informationen zu exfiltrieren.
+- **Brute-Force-Angriffe:** Ein Angreifer versucht, Passwörter zu erraten, um Zugang zu geschützten Informationen zu erhalten.
+
+#### Maßnahmen zur Sicherstellung der Vertraulichkeit
+- **Verschlüsselung** von Daten in Ruhe und während der Übertragung (z.B. AES, TLS).
+- Verwendung starker **Authentifizierungsmechanismen** (z.B. Multi-Faktor-Authentifizierung).
+- **Zugriffskontrollen** und rollenbasierte Zugriffsrechte (RBAC).
+
+---
+
+### 2. Integrity (Integrität)
+#### Definition
+Integrität stellt sicher, dass Daten vollständig, konsistent und unverändert bleiben. Jegliche unautorisierte oder unbeabsichtigte Manipulation von Informationen stellt eine Verletzung der Integrität dar.
+
+#### Beispiele für Angriffe
+- **Man-in-the-Middle (MITM):** Ein Angreifer modifiziert Datenpakete während der Übertragung.
+- **SQL-Injection:** Durch Einschleusen von SQL-Code wird der Inhalt einer Datenbank manipuliert.
+- **Dateimanipulation:** Eine Malware verändert Log-Dateien oder Systemdateien, um Aktivitäten zu verschleiern.
+
+#### Maßnahmen zur Sicherstellung der Integrität
+- Verwendung kryptografischer **Hash-Funktionen** wie *SHA-256* zur Datenintegritätsprüfung.
+- **Digitale Signaturen** zur Sicherstellung der Authentizität und Unveränderbarkeit von Daten.
+- Implementierung von **Intrusion Detection Systems (IDS)** zur Erkennung unerlaubter Veränderungen.
+
+---
+
+### 3. Availability (Verfügbarkeit)
+#### Definition
+Verfügbarkeit bedeutet, dass Systeme, Anwendungen und Daten für autorisierte Benutzer zu den benötigten Zeiten zugänglich sind. Eine Verletzung tritt auf, wenn der Zugriff durch Angriffe oder Ausfälle verhindert wird.
+
+#### Beispiele für Angriffe
+- **Denial-of-Service (DoS):** Ein Angreifer überlastet einen Server durch eine Flut von Anfragen, sodass er nicht mehr erreichbar ist.
+- **Ransomware:** Eine Schadsoftware verschlüsselt Daten oder Systeme und blockiert so den Zugriff.
+- **Physische Zerstörung:** Hardware-Ausfälle durch gezielte Sabotage oder Stromausfälle.
+
+#### Maßnahmen zur Sicherstellung der Verfügbarkeit
+- Implementierung von **Redundanzen** (z.B. geclusterte Server).
+- Einsatz von **DDoS-Mitigation-Tools** zur Abwehr von Überlastungsangriffen.
+- Regelmäßige **Backups** und **Notfallwiederherstellungspläne** (*Disaster Recovery*).
+
+---
+
+
+
 # OSINT
 
 ### Was ist OSINT?
