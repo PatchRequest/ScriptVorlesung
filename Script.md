@@ -544,6 +544,81 @@ Trotz seiner zahlreichen Vorteile ist Fuzzing nicht frei von Herausforderungen:
 - **Fehlerreproduktion:** Die exakte Reproduktion von Fehlern kann schwierig sein, insbesondere bei zufällig generierten Eingaben.
 - **Codeabdeckung:** Es besteht die Gefahr, dass bestimmte Codepfade ungetestet bleiben, insbesondere wenn sie nur unter speziellen Bedingungen erreicht werden.
 
+## Fuzzing mit AFL++: Ein Einstieg
+
+Fuzzing ist eine automatisierte Methode, um Software auf Schwachstellen zu testen, indem zufällige Eingabedaten generiert werden. AFL++ (American Fuzzy Lop++) ist eines der beliebtesten Tools für diese Aufgabe. Hier ist eine einfache Anleitung:
+
+### Voraussetzungen
+1. Installiere AFL++  
+2. Verfügbarer Quellcode für das Zielprogramm (z. B. `target.c`).
+
+### Schritte
+1. **Instrumentierung des Programms:**  
+   AFL++ benötigt ein instrumentiertes Zielprogramm, um Coverage-Feedback zu erhalten. Kompiliere das Ziel mit `afl-clang-fast`:  
+   ```bash
+   afl-clang-fast -o target target.c
+   ```
+
+2. **Initiales Testset erstellen:**  
+   Erstelle ein Verzeichnis für die Eingabedaten:  
+   ```bash
+   mkdir inputs
+   echo "test" > inputs/input1
+   ```
+
+3. **Fuzzing starten:**  
+   Führe AFL++ mit dem instrumentierten Programm aus:  
+   ```bash
+   afl-fuzz -i inputs -o outputs -- ./target @@
+   ```
+   - `-i inputs`: Verzeichnis mit den Seed-Dateien.
+   - `-o outputs`: Verzeichnis, in dem AFL++ Ergebnisse speichert.
+   - `./target @@`: Zielprogramm mit Platzhalter für Eingabedateien.
+
+4. **Analyse der Ergebnisse:**  
+   Schaue im `outputs`-Verzeichnis nach neuen Testfällen, Crashes oder Hangs:  
+   ```bash
+   ls outputs/crashes
+   ls outputs/hangs
+   ```
+
+### Beispiel C-Code für Fuzzing
+Hier ein einfacher C-Code, der gefuzzed werden kann:
+```c
+#include <stdio.h>
+#include <string.h>
+#include <stdlib.h>
+
+void vulnerable_function(const char *input) {
+    char buffer[16];
+
+    if (strlen(input) > 15) {
+        printf("Input too long!\n");
+        return;
+    }
+
+    strcpy(buffer, input);
+    printf("Buffer content: %s\n", buffer);
+}
+
+int main(int argc, char *argv[]) {
+    if (argc != 2) {
+        printf("Usage: %s <input>\n", argv[0]);
+        return 1;
+    }
+
+    vulnerable_function(argv[1]);
+    return 0;
+}
+```
+
+Speichere den Code in einer Datei, z. B. `target.c`. Dieser Code enthält eine potenziell unsichere Funktion (`strcpy`), die durch Fuzzing auf Schwachstellen getestet werden kann.
+
+### Erklärung
+AFL++ verwendet Coverage-Feedback, um Eingaben zu priorisieren, die bisher nicht getestete Codepfade auslösen. Dies ermöglicht eine effiziente und umfassende Fehleranalyse. Es kann Pufferüberläufe, Use-After-Free, und andere Schwachstellen aufdecken.
+
+> **Tipp:** Um die Effektivität zu steigern, können externe Sanitizer wie AddressSanitizer (`-fsanitize=address`) während der Instrumentierung aktiviert werden.
+
 
 # Active Directory
 
