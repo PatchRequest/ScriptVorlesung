@@ -611,11 +611,53 @@ int main(int argc, char *argv[]) {
     return 0;
 }
 ```
-
 Speichere den Code in einer Datei, z. B. `target.c`. Dieser Code enthält eine potenziell unsichere Funktion (`strcpy`), die durch Fuzzing auf Schwachstellen getestet werden kann.
 
-### Erklärung
-AFL++ verwendet Coverage-Feedback, um Eingaben zu priorisieren, die bisher nicht getestete Codepfade auslösen. Dies ermöglicht eine effiziente und umfassende Fehleranalyse. Es kann Pufferüberläufe, Use-After-Free, und andere Schwachstellen aufdecken.
+### Nutzung von CASR zur Crash-Analyse
+
+**CASR** (Crash Analysis and Severity Report) ist ein Tool, das Crashes klassifiziert und analysiert, um deren Exploitabilität zu bewerten. Es kann zusammen mit AFL++ verwendet werden, um Crashes effizienter zu untersuchen.
+
+#### Installation von CASR
+1. Klone das CASR-Repository:  
+   ```bash
+   git clone https://github.com/ispras/casr.git
+   cd casr
+   ```
+2. Baue und installiere CASR:  
+   ```bash
+   mkdir build && cd build
+   cmake ..
+   make -j$(nproc)
+   sudo make install
+   ```
+3. Überprüfe die Installation:  
+   ```bash
+   casrep --help
+   ```
+
+#### Crashes mit CASR analysieren
+1. **Verzeichnis mit Crashes durchsuchen:**  
+   Nutze CASR, um Crashes im `outputs/crashes`-Verzeichnis zu analysieren:  
+   ```bash
+   casrep -r -c outputs/crashes/
+   ```
+   CASR klassifiziert die Crashes als `NOT_EXPLOITABLE` oder `EXPLOITABLE`.
+
+2. **Einzelne Crash-Datei untersuchen:**  
+   Analysiere eine spezifische Crash-Datei:  
+   ```bash
+   casrep -c outputs/crashes/id:000000,sig:11,src:000000,op:explore,pos:32
+   ```
+
+3. **GDB-basierte Analyse:**  
+   Nutze `gdb-casrep`, um zusätzliche Informationen zu erhalten:  
+   ```bash
+   gdb-casrep -e ./target -i outputs/crashes/id:000000,sig:11
+   ```
+
+### Kombination von AFL++ und CASR
+Durch die Kombination von AFL++ und CASR kannst du effizient Schwachstellen identifizieren und priorisieren. AFL++ generiert Crashes, während CASR deren Exploitabilität bewertet. So erhältst du nicht nur viele Testfälle, sondern auch eine Einschätzung, welche davon sicherheitskritisch sind.
+
 
 > **Tipp:** Um die Effektivität zu steigern, können externe Sanitizer wie AddressSanitizer (`-fsanitize=address`) während der Instrumentierung aktiviert werden.
 
