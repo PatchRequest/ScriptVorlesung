@@ -650,9 +650,9 @@ Speichere den Code in einer Datei, z. B. `target.c`. Dieser Code enthält eine p
    ```
 
 3. **GDB-basierte Analyse:**  
-   Nutze `gdb-casrep`, um zusätzliche Informationen zu erhalten:  
+   Nutze `casr-gdb`, um zusätzliche Informationen zu erhalten:  
    ```bash
-   gdb-casrep -e ./target -i outputs/crashes/id:000000,sig:11
+   casr-gdb -e ./target -i outputs/crashes/id:000000,sig:11
    ```
 
 ### Kombination von AFL++ und CASR
