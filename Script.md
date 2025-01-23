@@ -581,23 +581,6 @@ Fuzzing ist eine automatisierte Methode, um Software auf Schwachstellen zu teste
 ### Nutzung von CASR zur Crash-Analyse
 
 **CASR** (Crash Analysis and Severity Report) ist ein Tool, das Crashes klassifiziert und analysiert, um deren Exploitabilität zu bewerten. Es kann zusammen mit AFL++ verwendet werden, um Crashes effizienter zu untersuchen.
-
-#### Installation von CASR
-1. Klone das CASR-Repository:  
-   ```bash
-   git clone https://github.com/ispras/casr.git
-   cd casr
-   ```
-2. Baue und installiere CASR:  
-   ```bash
-   mkdir build && cd build
-   cmake ..
-   make -j$(nproc)
-   sudo make install
-   ```
-3. Überprüfe die Installation:  
-   ```bash
-   casrep --help
    ```
 
 #### Crashes mit CASR analysieren
