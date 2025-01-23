@@ -556,62 +556,27 @@ Fuzzing ist eine automatisierte Methode, um Software auf Schwachstellen zu teste
 1. **Instrumentierung des Programms:**  
    AFL++ benötigt ein instrumentiertes Zielprogramm, um Coverage-Feedback zu erhalten. Kompiliere das Ziel mit `afl-clang-fast`:  
    ```bash
-   afl-clang-fast -o target target.c
+   afl-clang-fast -o fuzz_target target.c
    ```
 
 2. **Initiales Testset erstellen:**  
    Erstelle ein Verzeichnis für die Eingabedaten:  
    ```bash
-   mkdir inputs
-   echo "test" > inputs/input1
+   mkdir input_corpus
    ```
 
-3. **Fuzzing starten:**  
+3. **Spezifische Testfälle erstellen:**  
+   Erstelle verschiedene Eingabedateien, um diverse Schwachstellen zu testen:  
+   ```bash
+   printf "abc" > input_corpus/length1
+   ```
+
+4. **Fuzzing starten:**  
    Führe AFL++ mit dem instrumentierten Programm aus:  
    ```bash
-   afl-fuzz -i inputs -o outputs -- ./target @@
-   ```
-   - `-i inputs`: Verzeichnis mit den Seed-Dateien.
-   - `-o outputs`: Verzeichnis, in dem AFL++ Ergebnisse speichert.
-   - `./target @@`: Zielprogramm mit Platzhalter für Eingabedateien.
-
-4. **Analyse der Ergebnisse:**  
-   Schaue im `outputs`-Verzeichnis nach neuen Testfällen, Crashes oder Hangs:  
-   ```bash
-   ls outputs/crashes
-   ls outputs/hangs
+   afl-fuzz -i input_corpus -o findings ./fuzz_target @@
    ```
 
-### Beispiel C-Code für Fuzzing
-Hier ein einfacher C-Code, der gefuzzed werden kann:
-```c
-#include <stdio.h>
-#include <string.h>
-#include <stdlib.h>
-
-void vulnerable_function(const char *input) {
-    char buffer[16];
-
-    if (strlen(input) > 15) {
-        printf("Input too long!\n");
-        return;
-    }
-
-    strcpy(buffer, input);
-    printf("Buffer content: %s\n", buffer);
-}
-
-int main(int argc, char *argv[]) {
-    if (argc != 2) {
-        printf("Usage: %s <input>\n", argv[0]);
-        return 1;
-    }
-
-    vulnerable_function(argv[1]);
-    return 0;
-}
-```
-Speichere den Code in einer Datei, z. B. `target.c`. Dieser Code enthält eine potenziell unsichere Funktion (`strcpy`), die durch Fuzzing auf Schwachstellen getestet werden kann.
 
 ### Nutzung von CASR zur Crash-Analyse
 
@@ -636,30 +601,17 @@ Speichere den Code in einer Datei, z. B. `target.c`. Dieser Code enthält eine p
    ```
 
 #### Crashes mit CASR analysieren
-1. **Verzeichnis mit Crashes durchsuchen:**  
-   Nutze CASR, um Crashes im `outputs/crashes`-Verzeichnis zu analysieren:  
+**Verzeichnis mit Crashes durchsuchen:**  
+   Nutze CASR, um Crashes im `findings/crashes`-Verzeichnis zu analysieren:  
    ```bash
-   casrep -r -c outputs/crashes/
-   ```
-   CASR klassifiziert die Crashes als `NOT_EXPLOITABLE` oder `EXPLOITABLE`.
-
-2. **Einzelne Crash-Datei untersuchen:**  
-   Analysiere eine spezifische Crash-Datei:  
-   ```bash
-   casrep -c outputs/crashes/id:000000,sig:11,src:000000,op:explore,pos:32
+   casr-afl --input ./findings/ --output ./reporting -- ./fuzz_target @@
    ```
 
-3. **GDB-basierte Analyse:**  
-   Nutze `casr-gdb`, um zusätzliche Informationen zu erhalten:  
-   ```bash
-   casr-gdb -e ./target -i outputs/crashes/id:000000,sig:11
-   ```
 
 ### Kombination von AFL++ und CASR
 Durch die Kombination von AFL++ und CASR kannst du effizient Schwachstellen identifizieren und priorisieren. AFL++ generiert Crashes, während CASR deren Exploitabilität bewertet. So erhältst du nicht nur viele Testfälle, sondern auch eine Einschätzung, welche davon sicherheitskritisch sind.
 
 
-> **Tipp:** Um die Effektivität zu steigern, können externe Sanitizer wie AddressSanitizer (`-fsanitize=address`) während der Instrumentierung aktiviert werden.
 
 
 # Active Directory
